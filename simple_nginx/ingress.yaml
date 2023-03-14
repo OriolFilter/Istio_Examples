@@ -1,16 +1,27 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: v1
+kind: Pod
 metadata:
-  name: ingress-wildcard-host-test
+  name: nginx
+  labels:
+    app.kubernetes.io/name: proxy
 spec:
-  rules:
-    - host: "*"
-      http:
-        paths:
-          - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: nginx-backend
-                port:
-                  number: 80
+  containers:
+    - name: nginx
+      image: nginx:stable
+      ports:
+        - containerPort: 80
+          name: http-web-svc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+    - name: name-of-service-port
+      protocol: TCP
+      port: 80
+      targetPort: http-web-svc
