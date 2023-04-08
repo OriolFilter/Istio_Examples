@@ -1,0 +1,1 @@
+https://istio.io/latest/blog/2017/0.1-using-network-policy/#examples

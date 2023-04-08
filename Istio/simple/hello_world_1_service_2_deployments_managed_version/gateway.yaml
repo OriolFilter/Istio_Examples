@@ -1,0 +1,61 @@
+# https://github.com/istio/istio/blob/master/samples/helloworld/helloworld-gateway.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: helloworld-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helloworld-vs
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - helloworld-gateway
+  http:
+    - match:
+        - uri:
+            exact: /helloworld
+      route:
+        - destination:
+            host: helloworld.default.svc.cluster.local
+#            host: helloworld
+            port:
+              number: 80
+            subset: v1
+          weight: 20
+        - destination:
+#            host: helloworld
+            host: helloworld.default.svc.cluster.local
+            port:
+              number: 80
+            subset: v2
+          weight: 80
+      rewrite:
+        uri: "/"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld
+spec:
+#  host: helloworld # destination service
+  host: helloworld.default.svc.cluster.local # Full destination service, lil better for consistency
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
