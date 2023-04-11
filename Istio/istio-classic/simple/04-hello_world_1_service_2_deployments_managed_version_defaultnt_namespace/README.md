@@ -1,9 +1,14 @@
 ##### https://github.com/istio/istio/tree/master/samples/helloworld
 
+https://istio.io/latest/blog/2017/0.1-canary/
+
+
 # Simple Hello World
 
 - 1 Service
-- 1 Deployment
+- 2 Versions
+
+Iterates between the versions without any specific policy. (actually doesn't use the version for anything)
 
 I think that by default uses `RANDOM`.
 
@@ -12,11 +17,10 @@ https://istio.io/latest/docs/reference/config/networking/destination-rule/#Traff
 https://istio.io/latest/docs/reference/config/networking/destination-rule/#LoadBalancerSettings
 
 
-Relies in automatic sidecar injection.
+Manually allows the sidecar injection through the label in the pod
 
 
-> Contains service account configurations, yet they are commented as not "necessary".
- 
+https://istio.io/latest/docs/setup/additional-setup/sidecar-injection/#controlling-the-injection-policy
 
 ## Files
 
@@ -33,7 +37,8 @@ Relies in automatic sidecar injection.
 
 #### Deployments
 
-- helloworld-nginx  (Nginx container)
+- helloworld-v1 (Nginx)
+- helloworld-v2 (Apache)
 
 ## gateway.yaml
 
@@ -60,18 +65,35 @@ hosts: "*"
 ```yaml
 hosts: "*"
 uri: "/helloworld"
+versions:
+   v1:
+      weight: "50%"
+   v2:
+     weight: "50%"
 ```
+
+#### Destination Rule
+
+###### Configuration
+
+```yaml
+host: helloworld.defaultnt.svc.cluster.local # Full destination service, lil better for consistency
+subsets:
+- name: v1
+  labels:
+    version: v1
+- name: v2
+  labels:
+    version: v2
+```
+
 
 # Run example
 
 ## Deploy resources
 
 ```shell
-$ kubectl apply -f ./ 
-service/helloworld created
-deployment.apps/helloworld-nginx created
-gateway.networking.istio.io/helloworld-gateway created
-virtualservice.networking.istio.io/helloworld-vs created
+$ 
 ```
 
 ## Wait for the pods to be ready
@@ -79,9 +101,7 @@ virtualservice.networking.istio.io/helloworld-vs created
 (I think it deploys 2 pods as there is the Envoy Proxy pod besides the Nginx deployment)
 
 ```shell
-$ kubectl get deployment helloworld-nginx -w 
-NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-helloworld-nginx   1/1     1            1           44s
+
 ```
 
 ## Test the service
@@ -96,7 +116,8 @@ istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/
 
 ### Curl
 
+
 ```shell
-$ curl 192.168.1.50/helloworld -s | grep "<title>.*</title>"                                                                                                                                                                   ✔ 
-<title>Welcome to nginx!</title>
+$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<html><body><h1>It works!</h1></body></html>
 ```
