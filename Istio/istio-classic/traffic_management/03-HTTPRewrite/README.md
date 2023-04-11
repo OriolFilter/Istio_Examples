@@ -13,6 +13,8 @@ Through rewriting the URI we can point to the root directory from nginx.
         uri: "/"
 ```
 
+## The idea is that this rewrite is handled "internally" by Istio, not by the Client that started the request
+
 
 ## Practical usages:
 
