@@ -1,1 +1,1 @@
-# Example from istio, using it for testing purposes
+# Example from istio, storing it for testing purposes

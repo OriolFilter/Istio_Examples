@@ -1,0 +1,38 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: envoy-add-response-header2
+  namespace: default
+spec:
+  priority:  40
+  workloadSelector:
+    labels:
+      app: helloworld
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          portNumber: 80
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "envoy.filters.http.router"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.lua
+          typed_config:
+            "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+            inlineCode: |
+              function envoy_on_response(response_handle)
+                response_handle:headers():add("fruit", "watermelons")
+                response_handle:logCritical("Critical: Added header `fruit`")
+                response_handle:logErr("Error: Added header `fruit`")
+                response_handle:logWarn("Warning: Added header `fruit`")
+                response_handle:logInfo("Info: Added header `fruit`")
+                response_handle:logDebug("Debug: Added header `fruit`")
+                response_handle:logTrace("Trace: Added header `fruit`")
+                response_handle:logInfo(">>>> Executed `envoy-add-response-header2` <<<<")
+              end

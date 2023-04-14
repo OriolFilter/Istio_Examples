@@ -9,3 +9,8 @@ https://github.com/redkubes/otomi-core/blob/main/charts/team-ns/templates/istio-
 
 
 https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
+
+
+
+
+
