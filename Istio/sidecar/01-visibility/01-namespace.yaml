@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: visiblent
+  labels:
+#    istio-injection: "false"
+    istio-injection: "enabled"
+---

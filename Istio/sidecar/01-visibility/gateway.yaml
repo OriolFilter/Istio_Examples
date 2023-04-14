@@ -29,7 +29,7 @@ spec:
             exact: /helloworld
       route:
         - destination:
-            host: helloworld
+            host: helloworld.visiblent.svc.cluster.local
             port:
               number: 80
       rewrite:

@@ -6,6 +6,7 @@ metadata:
   labels:
     app: helloworld
     service: helloworld
+  namespace: visiblent
 spec:
   ports:
     - port: 80
@@ -26,6 +27,7 @@ metadata:
   name: helloworld-nginx
   labels:
     app: helloworld
+  namespace: visiblent
 spec:
   replicas: 1
   selector:
@@ -35,6 +37,7 @@ spec:
     metadata:
       labels:
         app: helloworld
+      namespace: visiblent
     spec:
 #      serviceAccountName: istio-helloworld
       containers:

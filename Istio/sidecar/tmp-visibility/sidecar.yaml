@@ -1,0 +1,27 @@
+apiVersion:
+  networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: default
+  namespace: foo
+spec:
+  egress:
+    - hosts:
+        - "./*"
+        - "istio-system/*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: default-sidecar
+  namespace: default
+spec:
+  workloadSelector:
+    labels:
+      version: v1
+  egress:
+    - hosts:
+        - "default/*"
+        - "istio-system/*"
+        - "staging/*"
+---
