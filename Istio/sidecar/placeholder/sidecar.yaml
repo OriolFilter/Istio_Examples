@@ -1,0 +1,47 @@
+## First we overide the default configuration.
+# This configures the egress, to only allow egress within the same namespace, and to `istio-system`
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: default
+  namespace: istio-config
+spec:
+  egress:
+    - hosts:
+        - "./*"
+        - "istio-system/*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: helloworlddo
+#  namespace: visiblent
+spec:
+  workloadSelector:
+    labels:
+      app: helloworld
+  ingress:
+#    - bind: 192.168.1.50
+#    - bind: 172.17.121.220
+    - port:
+        number: 8080
+        protocol: HTTP
+        name: ingressport
+      defaultEndpoint: 127.0.0.1:80
+#      defaultEndpoint: unix:///var/run/someuds.sock
+#      captureMode: DEFAULT
+#  egress:
+#    - port:
+#        number: 80
+#        protocol: HTTP
+#        name: egressport
+#      hosts:
+#        - "prod-us1/*"
+#    - hosts:
+#        - "istio-system/*"
+#  egress:
+#      hosts:
+#        - "./*"
+#        - "istio-system/*"
+#      captureMode: DEFAULT
+

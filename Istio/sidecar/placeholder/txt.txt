@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings
+  labels:
+    app: ratings
+    service: ratings
+spec:
+  ports:
+  - port: 8443
+    name: https
+    targetPort: 80
+  selector:
+    app: ratings
+    
+    
+    
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: ratings-peer-auth
+  namespace: prod-us1
+spec:
+  selector:
+    matchLabels:
+      app: ratings
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    80:
+      mode: DISABLE
+
+      
+      
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: ratings
+  namespace: prod-us1
+spec:
+  workloadSelector:
+    labels:
+      app: ratings
+  ingress:
+  - port:
+      number: 80
+      protocol: HTTPS
+      name: somename
+    defaultEndpoint: unix:///var/run/someuds.sock
+    tls:
+      mode: SIMPLE
+      privateKey: "/etc/certs/privatekey.pem"
+      serverCertificate: "/etc/certs/servercert.pem"

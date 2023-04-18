@@ -1,19 +1,19 @@
-# https://github.com/istio/istio/blob/master/samples/helloworld/helloworld.yaml
+## https://github.com/istio/istio/blob/master/samples/helloworld/helloworld.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: helloworld
+  name: helliworld
   labels:
     app: helloworld
     service: helloworld
-  namespace: visiblent
+#  namespace: visiblent
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
   selector:
     app: helloworld
----
+#---
 #apiVersion: v1
 #kind: ServiceAccount
 #metadata:
@@ -27,7 +27,7 @@ metadata:
   name: helloworld-nginx
   labels:
     app: helloworld
-  namespace: visiblent
+#  namespace: visiblent
 spec:
   replicas: 1
   selector:
@@ -37,7 +37,7 @@ spec:
     metadata:
       labels:
         app: helloworld
-      namespace: visiblent
+#      namespace: visiblent
     spec:
 #      serviceAccountName: istio-helloworld
       containers:

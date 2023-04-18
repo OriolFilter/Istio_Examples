@@ -5,4 +5,5 @@ metadata:
   labels:
 #    istio-injection: "false"
     istio-injection: "enabled"
+    f: "3"
 ---
