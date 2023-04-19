@@ -58,16 +58,29 @@ hosts: "*"
 
 
 ```yaml
-hosts: "*"
-uri: "/helloworld"
-rewrite:
-  uri: "/"
+  hosts:
+    - "*"
+  gateways:
+    - helloworld-gateway
+  http:
+    - match:
+        - uri:
+            exact: /helloworld
+      route:
+        - destination:
+            host: helloworld
+            port:
+              number: 80
+      rewrite:
+        uri: "/"
 ```
-- Allows the traffic from that have any domain.
+- Allows the traffic that have as a destination any domain.
 
 - Only allows traffic that has as a destination the directory/path `/helloworld`.
 
 - `rewrite.uri` allows to redirect the traffic towards the root directory of the service, as the service(s) used don't have any directory named `helloworld` but are configured to work at the root base level.
+
+- Traffic request is sent to the service named `helloworld`, to the service port 80.
 
 # Run example
 

@@ -1,3 +1,26 @@
+
+## Examples
+
+- 01-ingress-proxy-forwarding
+
+-
+
+
+
+
+
+
+
+egress from (pod to pod)
+
+mtls
+
+
+
+
+
+---
+
 https://istio.io/latest/docs/reference/config/networking/sidecar/
 
 

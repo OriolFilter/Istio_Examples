@@ -1,4 +1,3 @@
-# https://github.com/istio/istio/blob/master/samples/helloworld/helloworld-gateway.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -29,36 +28,8 @@ spec:
             exact: /helloworld
       route:
         - destination:
-            host: helliworld
-#            host: helloworlddo
-#            host: helloworld-nginx-56c5c77cd7-9mxmf.visiblent
+            host: helloworld.default.svc.cluster.local
             port:
               number: 8080
       rewrite:
         uri: "/"
----
-#apiVersion: networking.istio.io/v1alpha3
-#kind: VirtualService
-#metadata:
-#  name: helloworld-vs
-#spec:
-#  hosts:
-#    - "*"
-#  gateways:
-#    - helloworld-gateway
-#  http:
-#    - timeout: 3s
-#      match:
-#        - uri:
-#            - exact: "/external"
-#      route:
-#        - destination:
-#            host: help.websiteos.com
-#            port:
-#              number: 80
-#      rewrite:
-#        uri: "/websiteos/example_of_a_simple_html_page.htm"
-#      headers:
-#        request:
-#          set:
-#            HOST: "help.websiteos.com"

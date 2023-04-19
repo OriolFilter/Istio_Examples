@@ -1,4 +1,23 @@
 
+# Examples
+
+ALL NEEDS DOCUMENTATION
+
+- 01-2_deployments_method
+- 02-DirectResponse-HTTP-Body
+- 03-HTTPRewrite
+- 04-HTTPRedirect
+- 05a-FaultInjection-delay
+- 05b-FaultInjection-abort
+
+
+# TODO
+06-mTLS (pending)
+
+
+
+
+
 Multiple Ingress
 
 https://youtu.be/QIkryA8HnQ0
