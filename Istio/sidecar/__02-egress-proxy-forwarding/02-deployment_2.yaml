@@ -2,35 +2,41 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: helloworld
+  name: internal
   labels:
-    app: helloworld
+    app: internal
+  namespace: foo
 spec:
   ports:
     - port: 8080
       name: http
+    - port: 80
+      name: http-default
   selector:
-    app: helloworld
+    app: internal
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-nginx
+  name: internal
   labels:
-    app: helloworld
+    app: internal
+  namespace: foo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: helloworld
+      app: internal
   template:
     metadata:
       labels:
-        app: helloworld
+        app: internal
+        service: apache
     spec:
       containers:
-        - name: helloworld
-          image: nginx
+        - name: internal
+          image: httpd
           resources:
             requests:
               cpu: "100m"

@@ -21,8 +21,18 @@ ALL NEEDS DOCUMENTATION
 - 05-hello_world_1_Service_Entry
 
 
+
+
+
+
+
+
 # TODO
 
 do HTTPS ingress
 
 tcp ingress to minecraft/factorio/zomboid
+
+Service Entry with outbound policy set to `REGISTRY_ONLY`
+istioctl install --set profile=default -y --set meshConfig.accessLogFile=/dev/stdout  --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
+(no funca)

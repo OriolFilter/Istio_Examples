@@ -1,13 +1,14 @@
-## https://github.com/istio/istio/blob/master/samples/helloworld/helloworld.yaml
+# https://github.com/istio/istio/blob/master/samples/helloworld/helloworld.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: helloworld
   labels:
-    app-name: helloworld
+    app: helloworld
+    service: helloworld
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
   selector:
     app: helloworld
@@ -37,3 +38,20 @@ spec:
           imagePullPolicy: IfNotPresent #Always
           ports:
             - containerPort: 80
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: external-svc
+spec:
+  hosts:
+    - help.websiteos.com
+    # /websiteos/example_of_a_simple_html_page.htm
+#    - http://help.websiteos.com/websiteos/example_of_a_simple_html_page.htm
+  ports:
+    - number: 80
+      name: http
+      protocol: HTTP
+  resolution: DNS
+  location: MESH_EXTERNAL
+---

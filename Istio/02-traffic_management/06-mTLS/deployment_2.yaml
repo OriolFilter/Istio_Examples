@@ -1,0 +1,50 @@
+# https://github.com/istio/istio/blob/master/samples/helloworld/helloworld.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: byeworld
+  labels:
+    app: byeworld
+    service: byeworld
+spec:
+  ports:
+    - port: 9090
+      name: http
+      targetPort: 80
+  selector:
+    app: byeworld
+#---
+#apiVersion: v1
+#kind: ServiceAccount
+#metadata:
+#  name: istio-helloworld
+#  labels:
+#    account:
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: byeworld-nginx
+  labels:
+    app: byeworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: byeworld
+  template:
+    metadata:
+      labels:
+        app: byeworld
+        sidecar.istio.io/inject: "false"
+    spec:
+#      serviceAccountName: istio-byeworld
+      containers:
+        - name: byeworld
+          image: nginx
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 80

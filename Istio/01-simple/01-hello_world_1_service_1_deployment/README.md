@@ -14,7 +14,7 @@ https://istio.io/latest/docs/reference/config/networking/destination-rule/#Traff
 https://istio.io/latest/docs/reference/config/networking/destination-rule/#LoadBalancerSettings
 
 > Contains service account configurations, yet they are commented as not "necessary".
- 
+
 
 ## Files
 
@@ -94,9 +94,7 @@ gateway.networking.istio.io/helloworld-gateway created
 virtualservice.networking.istio.io/helloworld-vs created
 ```
 
-## Wait for the pods to be ready
-
-(I think it deploys 2 pods as there is the Envoy Proxy pod besides the Nginx deployment)
+## Wait for the deployment to be ready
 
 ```shell
 $ kubectl get deployment helloworld-nginx -w 

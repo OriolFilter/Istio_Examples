@@ -37,53 +37,5 @@ EOF
 ```
 
 
-```sh
-kubectl delete -f - << EOF
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: metallb-system
-  name: config
-data:
-  config: |
-    address-pools:
-    - name: default
-      protocol: layer2
-      addresses:
-      - 192.168.1.50-192.168.1.130
-EOF
-```
-
-
-
-```sh
-kubectl apply -f - << EOF
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: first-pool
-  namespace: metallb-system
-spec:
-  addresses:
-  - 192.168.1.50-192.168.1.130
-EOF
-```
-
-
-
-
-```sh
-kubectl delete -f - << EOF
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: first-pool
-  namespace: metallb-system
-spec:
-  addresses:
-  - 192.168.1.50-192.168.1.130
-EOF
-```
-
 
 # https://github.com/metallb/metallb/blob/main/design/pool-configuration.md

@@ -34,3 +34,19 @@ spec:
               number: 80
       rewrite:
         uri: "/"
+
+    - timeout: 3s
+      match:
+        - uri:
+            exact: "/external"
+      route:
+        - destination:
+            host: help.websiteos.com
+            port:
+              number: 80
+      rewrite:
+        uri: "/websiteos/example_of_a_simple_html_page.htm"
+      headers:
+        request:
+          set:
+            HOST: "help.websiteos.com"

@@ -1,0 +1,5 @@
+spec:
+  meshConfig:
+    outboundTrafficPolicy:
+      mode: REGISTRY_ONLY
+# Doesnt work

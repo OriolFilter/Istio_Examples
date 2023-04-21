@@ -2,7 +2,9 @@
 
 - 01-hello_world_1_service_1_deployment
 
-# TO TRAFFIC PATH DIAGRAM    etc -> "POD" -> sidecar -> service container
+# TO TRAFFIC PATH DIAGRAM
+
+`etc -> "POD" -> sidecar -> service container`
 
 # Description
 

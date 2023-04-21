@@ -1,0 +1,62 @@
+#apiVersion: networking.istio.io/v1beta1
+#kind: Sidecar
+#metadata:
+#  name: helloworld-default
+#  namespace: default
+##  namespace: istio-config
+#spec:
+##  workloadSelector:
+##    labels:
+##      app: helloworld
+##  egress:
+##    - hosts:
+##        - "./*"
+##        - "istio-system/*"
+#  ingress:
+#    - port:
+#        number: 8080
+#        protocol: HTTP
+#        name: ingressport
+#      defaultEndpoint: 127.0.0.1:80
+---
+#apiVersion: networking.istio.io/v1alpha3
+#kind: Sidecar
+#metadata:
+#  name: helloworld-sidecar
+#spec:
+#  workloadSelector:
+#    labels:
+#      app: helloworld
+#  ingress:
+#    - port:
+#        number: 8080
+#        protocol: HTTP
+#        name: ingressport
+#      defaultEndpoint: 127.0.0.1:80
+#---
+#apiVersion: networking.istio.io/v1beta1
+#kind: Sidecar
+#metadata:
+#  name: helloworld-default
+#  namespace: default
+##  namespace: istio-system
+#spec:
+#  workloadSelector:
+#      labels:
+#        app: helloworld2
+#  egress:
+#    - port:
+#        number: 9080
+#        protocol: HTTP
+#        name: httpingress
+#      hosts:
+#        - "foo/*"
+#    - hosts:
+#        - "istio-system/*"
+#  ingress:
+#    - port:
+#        number: 8080
+#        protocol: HTTP
+#        name: ingressport
+#      defaultEndpoint: 127.0.0.1:80
+#---
