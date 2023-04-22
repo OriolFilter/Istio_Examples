@@ -1,3 +1,8 @@
+---
+gitea: none
+include_toc: true
+---
+
 # Continues from
 
 - [01-hello_world_1_service_1_deployment](../../01-Simple/01-hello_world_1_service_1_deployment)
