@@ -30,7 +30,6 @@ spec:
     metadata:
       labels:
         app: byeworld
-#        sidecar.istio.io/inject: "false"
     spec:
       containers:
         - name: byeworld

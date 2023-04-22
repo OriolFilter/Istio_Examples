@@ -15,7 +15,7 @@ include_toc: true
 
 Bla bla bla
 
-Configuration targeting service accounts
+Configuration targeting service accounts (among others)
 
 By default, when a pod is deployed, if a service account has not been specified, it will be given the service account `default` from that namespace. 
 
