@@ -30,7 +30,7 @@ metadata:
   namespace: default
 ```
 
-Citing the [Authorization Policy documentation from Istio](https://istio.io/latest/docs/reference/config/security/authorization-policy), regarding the evaluation behavior of this rules:
+Citing the [Authorization Policy documentation from Istio](https://istio.io/latest/docs/reference/config/security/authorization-policy), regarding the evaluation behavior of these rules:
 
     1. If there are any CUSTOM policies that match the request, evaluate and deny the request if the evaluation result is deny.
     2. If there are any DENY policies that match the request, deny the request.
@@ -86,7 +86,7 @@ spec:
 
 #### allow-get-from-default
 
-As an additional example, I have set a new rule, that will allow the traffic comming from the namespace `default`, as long the method used is `HEAD` and is not targeting the path `/secret`. 
+As an additional example, I have set a new rule, that will allow the traffic coming from the namespace `default`, as long the method used is `HEAD` and is not targeting the path `/secret`. 
 
 ```yaml
 apiVersion: security.istio.io/v1beta1
@@ -272,7 +272,7 @@ $ kubectl delete peerauthentications.security.istio.io default-mtls
 
 ### connectivity between byeworld towards helloworld
 
-As the rule is no longer being set, and for such not being applied, the traffic from `byeworld` is able to reach the service `helloworld` without having the need to using mTLS.
+As the rule is no longer being set, and for such not being applied, the traffic from `byeworld` is able to reach the service `helloworld` without having the need to use mTLS.
 
 ```shell
 $ kubectl exec -i -t "$(kubectl get pod -l app=byeworld | tail -n 1 | awk '{print $1}')" -- curl http://helloworld.default.svc.cluster.local:8080 | grep "<title>.*</title>"
