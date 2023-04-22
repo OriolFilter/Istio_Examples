@@ -26,7 +26,10 @@ From the Kiali dashboard we will review the mTLS label displayed
 ## Deploy the resources
 
 ```shell
- kubectl apply -f ./
+kubectl apply -f ./
+````
+
+```txt
 peerauthentication.security.istio.io/default-mtls created
 service/helloworld created
 deployment.apps/helloworld-nginx created
@@ -92,7 +95,9 @@ On the service `helloworld`, it displays the message `mTLS`
 #### Get LB IP
 
 ```shell
-$ kubectl get svc istio-ingressgateway -n istio-system 
+kubectl get svc istio-ingressgateway -n istio-system 
+```
+```txt
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
@@ -102,7 +107,9 @@ istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/
 The service works as intended as we can reach the `helloworld` service.
 
 ```shell
-$  curl 192.168.1.50/helloworld -s | grep "<title>.*</title>"
+curl 192.168.1.50/helloworld -s | grep "<title>.*</title>"
+```
+```txt
 <title>Welcome to nginx!</title>
 ```
 
@@ -112,7 +119,9 @@ The `byeworld` service also seems to work, even tho the deployment has no sideca
 Yet, as there is no sidecar, this rule is not applied, and for such the traffic is allowed towards the service and pod.
 
 ```shell
-$  curl 192.168.1.50/byeworld -s | grep "<title>.*</title>"
+curl 192.168.1.50/byeworld -s | grep "<title>.*</title>"
+```
+```txt
 <title>Welcome to nginx!</title>
 ```
 
@@ -123,7 +132,9 @@ $  curl 192.168.1.50/byeworld -s | grep "<title>.*</title>"
 It works.
 
 ```shell
-$  kubectl exec -i -t "$(kubectl get pod -l app=helloworld | tail -n 1 | awk '{print $1}')" -- curl http://byeworld.default.svc.cluster.local:9090 | grep "<title>.*</title>"
+kubectl exec -i -t "$(kubectl get pod -l app=helloworld | tail -n 1 | awk '{print $1}')" -- curl http://byeworld.default.svc.cluster.local:9090 | grep "<title>.*</title>"
+```
+```txt
 <title>Welcome to nginx!</title>
 ```
 
@@ -131,12 +142,14 @@ $  kubectl exec -i -t "$(kubectl get pod -l app=helloworld | tail -n 1 | awk '{p
 
 It fails.
 
-Currently the rule from `PeerAuthentication` that requires the traffic to use mTLS, is currently being applied by the Istio sidecar from the `helloworld` pod.
+Currently, the rule from `PeerAuthentication` that requires the traffic to use mTLS, is currently being applied by the Istio sidecar from the `helloworld` pod.
 
 As `byeworld` pods don't have the Istio sidecar enabled, the mTLS traffic is not being managed, and for such, it fails to obvey the rule set by the `PeerAuthentication` configuration set, resulted on this issue.
 
 ```shell
-$  kubectl exec -i -t "$(kubectl get pod -l app=byeworld | tail -n 1 | awk '{print $1}')" -- curl http://helloworld.default.svc.cluster.local:8080
+kubectl exec -i -t "$(kubectl get pod -l app=byeworld | tail -n 1 | awk '{print $1}')" -- curl http://helloworld.default.svc.cluster.local:8080
+```
+```txt
 curl: (56) Recv failure: Connection reset by peer
 command terminated with exit code 56
 ```
@@ -145,7 +158,7 @@ command terminated with exit code 56
 
 
 ```shell
-$ kubectl delete peerauthentications.security.istio.io default-mtls
+kubectl delete peerauthentications.security.istio.io default-mtls
 ```
 
 ### connectivity between byeworld towards helloworld
@@ -153,7 +166,9 @@ $ kubectl delete peerauthentications.security.istio.io default-mtls
 As the rule is no longer being set, and for such not being applied, the traffic from `byeworld` is able to reach the service `helloworld` without having the need to using mTLS.
 
 ```shell
-$ kubectl exec -i -t "$(kubectl get pod -l app=byeworld | tail -n 1 | awk '{print $1}')" -- curl http://helloworld.default.svc.cluster.local:8080 | grep "<title>.*</title>"
+kubectl exec -i -t "$(kubectl get pod -l app=byeworld | tail -n 1 | awk '{print $1}')" -- curl http://helloworld.default.svc.cluster.local:8080 | grep "<title>.*</title>"
+```
+```txt
 <title>Welcome to nginx!</title>
 ```
 
