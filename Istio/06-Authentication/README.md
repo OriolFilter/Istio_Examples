@@ -1,16 +1,16 @@
 ## Authentication
 
-- Between pods
+- Based on deployments
 
-- Between namespaces
+- Based on namespaces (done)
 
-- Based on method
+- Based on method (somewhat done, so I will mark it as valid)
 
 - Based on service account(s)
 
 - Custom action (it's in alpha feature, should not focus on it for now)
 
-- Audit / logs
+- Audit / logs (shold be the 5th)
 
 
 
@@ -24,3 +24,6 @@ https://discuss.istio.io/t/istio-deployment-deny-all-default/10983/6
     - source:
         principals: ["cluster.local/ns/default/sa/bookinfo-reviews"]
 ```
+
+
+JWT seems important, refer to source.requestPrincipals

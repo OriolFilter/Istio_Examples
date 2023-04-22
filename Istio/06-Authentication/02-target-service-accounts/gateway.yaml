@@ -35,12 +35,11 @@ spec:
         uri: "/"
     - match:
         - uri:
-            exact: /internal
+            exact: /byeworld
       route:
         - destination:
-#            host: helloworld.default.svc.cluster.local
-            host: internal.foo.svc.cluster.local
+            host: byeworld.foo.svc.cluster.local
             port:
-              number: 8080
+              number: 9090
       rewrite:
         uri: "/"

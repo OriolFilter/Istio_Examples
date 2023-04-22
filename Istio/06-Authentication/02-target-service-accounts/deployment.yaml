@@ -1,25 +1,17 @@
-## https://github.com/istio/istio/blob/master/samples/helloworld/helloworld.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: helliworld
+  name: helloworld
   labels:
     app: helloworld
     service: helloworld
-#  namespace: visiblent
 spec:
   ports:
     - port: 8080
       name: http
+      targetPort: 80
   selector:
     app: helloworld
-#---
-#apiVersion: v1
-#kind: ServiceAccount
-#metadata:
-#  name: istio-helloworld
-#  labels:
-#    account:
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -27,7 +19,6 @@ metadata:
   name: helloworld-nginx
   labels:
     app: helloworld
-#  namespace: visiblent
 spec:
   replicas: 1
   selector:
@@ -37,15 +28,14 @@ spec:
     metadata:
       labels:
         app: helloworld
-#      namespace: visiblent
     spec:
-#      serviceAccountName: istio-helloworld
+      serviceAccountName: istio-helloworld-sa
       containers:
         - name: helloworld
           image: nginx
           resources:
             requests:
               cpu: "100m"
-          imagePullPolicy: IfNotPresent #Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80

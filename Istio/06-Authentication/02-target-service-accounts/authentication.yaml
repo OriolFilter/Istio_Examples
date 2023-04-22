@@ -27,6 +27,8 @@ spec:
     - from:
         - source:
             namespaces: ["istio-system"]
+        - source:
+            principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
 ---
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -37,9 +39,12 @@ spec:
   action: ALLOW
   rules:
     - from:
-      - source:
-          namespaces: ["default"]
+        - source:
+            namespaces: ["default"]
+        - source:
+            principals: ["cluster.local/ns/default/sa/istio-helloworld-sa"]
       to:
       - operation:
           methods: ["HEAD"]
           notPaths: ["/secret*"]
+---
