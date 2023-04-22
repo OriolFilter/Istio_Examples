@@ -9,7 +9,9 @@ include_toc: true
 
 ## Description
 
-Nowadays, by default, Istio will have mTLS automatically enabled, allowing the Istio Sidecars to **automatically** negotiate the TLS traffic between them.encrypted
+Nowadays, by default, Istio will have mTLS automatically enabled, allowing the Istio Sidecars to **automatically** negotiate the TLS traffic between them.encrypted.
+
+More information about that topic in the [following documentation](https://istio.io/latest/docs/tasks/security/authentication/authn-policy/#auto-mutual-tls).
 
 To avoid this behavior, the pod requires to not have an Istio Sidecar set to that pod, for that reason on this example we set up 2 deployments, 1 with a sidecar, and a second without a sidecar.
 

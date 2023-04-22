@@ -12,3 +12,5 @@
 
 
 JWT seems important, refer to source.requestPrincipals
+
+https://istio.io/latest/docs/tasks/security/authentication/
