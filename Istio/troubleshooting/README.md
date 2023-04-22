@@ -9,3 +9,6 @@ $ kubectl exec -n default  "$(kubectl get pod -n default -l app1 =helloworld -o 
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 ```
+
+
+### Logs

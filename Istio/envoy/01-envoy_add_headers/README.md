@@ -12,7 +12,7 @@ https://discuss.istio.io/t/adding-custom-response-headers-using-istios-1-6-0-env
 https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/lua_filter
 
 
-kubectl logs -f deployments/istiod -n istio-system   
+> kubectl logs -f deployments/istiod -n istio-system   
 
 
 

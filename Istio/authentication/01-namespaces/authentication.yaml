@@ -1,0 +1,54 @@
+# Deny all requests to namespace foo
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-nothing
+  namespace: foo
+spec:
+  {}
+---
+# Deny all requests to namespace default
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-nothing
+  namespace: default
+spec:
+  {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-from-istio-system
+  namespace: foo
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["istio-system"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-head-from-default
+  namespace: foo
+spec:
+  action: ALLOW
+  rules:
+    - from:
+      - source:
+          namespaces: ["default"]
+      to:
+      - operation:
+          methods: ["HEAD"]
+          notPaths: ["/secret*"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default-mtls
+  namespace: default
+spec:
+  mtls:
+    mode: STRICT

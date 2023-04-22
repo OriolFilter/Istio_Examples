@@ -1,65 +1,22 @@
-https://istio.io/latest/docs/concepts/security/#authentication-policies
-
-https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/
-
-https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication
-
-
 # Continues from
 
-- 01-hello_world_1_service_1_deployment
+- [01-hello_world_1_service_1_deployment](../../01-simple/01-hello_world_1_service_1_deployment)
 
-
-
-
+## Description
 
 Nowadays, by default, Istio will have mTLS automatically enabled, allowing the Istio Sidecars to **automatically** negotiate the TLS traffic between them.encrypted
 
-To avoid this behavior, the pod requires to not have a Istio Sidecar set to that pod, for that reason on this example we set up 2 deployments, 1 with a sidecar, and a second without a sidecar.
+To avoid this behavior, the pod requires to not have an Istio Sidecar set to that pod, for that reason on this example we set up 2 deployments, 1 with a sidecar, and a second without a sidecar.
 
 From the Kiali dashboard we will review the mTLS label displayed
 
 > **Note:**\
 > If the PeerAuthentication is deployed in the `istio-system` namespace, it will affect all the namespaces in the cluster.
 
+# Changelog
 
 
 # Walkthrough
-
-
-<!-- ### uninstall Istio (if installed) -->
-
-<!-- ```shell -->
-<!-- $ istioctl uninstall --purge -y -->
-<!-- All Istio resources will be pruned from the cluster -->
-
-<!-- Removed IstioOperator:istio-system:installed-state. -->
-<!-- Removed Deployment:istio-system:istio-ingressgateway. -->
-<!-- Removed Deployment:istio-system:istiod. -->
-<!-- Removed Service:istio-system:istio-ingressgateway. -->
-<!-- ... -->
-<!-- ``` -->
-
-<!-- ### Install Istio on privileged mode -->
-
-<!-- and auto mTLS disabled -->
-<!--   --set values.global.mtls.auto=true --set values.global.mtls.enabled=false -->
-
-<!-- ```shell -->
-<!-- $ stioctl install --set profile=default -y --set values.global.proxy.privileged=true -->
-<!-- ✔ Istio core installed -->
-<!-- ✔ Istiod installed -->
-<!-- ✔ Ingress gateways installed -->
-<!-- ✔ Installation complete -->
-
-<!-- Making this installation the default for injection and validation. -->
-
-<!-- Thank you for installing Istio 1.17.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/hMHGiwZHPU7UQRWe9 -->
-
-<!-- ``` -->
-
-<!-- If you installed Istio with values.global.proxy.privileged=true, you can use tcpdump to verify traffic is encrypted or not. -->
-
 
 ## Deploy the resources
 
@@ -103,7 +60,7 @@ istioctl dashboard kiali
 
 ## Display services menu
 
-![Kiali menu, displaying 3 services. helloworld, byeworld and kubernetes][./src/06-kiali-services.png]
+![Kiali menu, displaying 3 services. helloworld, byeworld and kubernetes](../src/06-kiali-services.png)
 
 > **Highlight:**\
 > On the column located at the right, we can notice a note saying `Missing Sidecar`
@@ -116,16 +73,24 @@ istioctl dashboard kiali
 
 On the service `byeworld` (reminder that it's pods had the Istio sidecar injection disabled), it displays the message `No mTLS`, meaning that mTLS (Mutual TLS between Istio sidecards) is not available.
 
-![][./src/06-kiali-services-byeworld.png]
+![](../src/06-kiali-services-byeworld.png)
 
 ### Helloworld
 
 On the service `helloworld`, it displays the message `mTLS`
 
-![][./src/06-kiali-services-helloworld.pngk]
+![](../src/06-kiali-services-helloworld.png)
 
 ## Test resources
 ### Curl / LB requests / requests from external traffic
+
+#### Get LB IP
+
+```shell
+$ kubectl get svc istio-ingressgateway -n istio-system 
+NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
+istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
+```
 
 #### helloworld
 
@@ -186,3 +151,11 @@ As the rule is no longer being set, and for such not being applied, the traffic 
 $ kubectl exec -i -t "$(kubectl get pod -l app=byeworld | tail -n 1 | awk '{print $1}')" -- curl http://helloworld.default.svc.cluster.local:8080 | grep "<title>.*</title>"
 <title>Welcome to nginx!</title>
 ```
+
+# Links of interest
+
+- https://istio.io/latest/docs/concepts/security/#authentication-policies
+
+- https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication
+
+- https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/

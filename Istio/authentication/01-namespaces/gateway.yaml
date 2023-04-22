@@ -38,7 +38,7 @@ spec:
             exact: /byeworld
       route:
         - destination:
-            host: byeworld.default.svc.cluster.local
+            host: byeworld.foo.svc.cluster.local
             port:
               number: 9090
       rewrite:
