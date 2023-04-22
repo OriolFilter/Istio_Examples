@@ -1,7 +1,7 @@
 # Continues from
 
 [//]: # (- [01-hello_world_1_service_1_deployment]&#40;../../01-simple/01-hello_world_1_service_1_deployment&#41;)
-- [06-mTLS](../../02-traffic_management/06-mTLS)
+- [06-mTLS](../../02-Traffic_management/06-mTLS)
 
 ## Description
 
