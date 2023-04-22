@@ -53,7 +53,7 @@ kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/ad
 ## Wait for deployments to be ready
 
 ```shell
-$ kubectl get pods -A -w
+kubectl get pods -A -w
 ```
 
 ## Kiali
@@ -81,13 +81,13 @@ istioctl dashboard kiali
 
 On the service `byeworld` (reminder that it's pods had the Istio sidecar injection disabled), it displays the message `No mTLS`, meaning that mTLS (Mutual TLS between Istio sidecards) is not available.
 
-![](../src/06-kiali-services-byeworld.png)
+![byeworld displays the message `No mTLS`](../src/06-kiali-services-byeworld.png)
 
 ### Helloworld
 
 On the service `helloworld`, it displays the message `mTLS`
 
-![](../src/06-kiali-services-helloworld.png)
+![helloworld displays the message `mTLS`](../src/06-kiali-services-helloworld.png)
 
 ## Test resources
 ### Curl / LB requests / requests from external traffic
