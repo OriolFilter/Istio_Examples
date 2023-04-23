@@ -9,3 +9,4 @@ ALL NEEDS DOCUMENTATION
 - 05a-FaultInjection-delay
 - 05b-FaultInjection-abort
 - 06-mTLS  (would need some documentation review, mainly go over the differences respective to the template/prior configuration used)
+- 07-HTTPS-Gateway-Simple-TLS   <- Doesn't respect the changelog format.

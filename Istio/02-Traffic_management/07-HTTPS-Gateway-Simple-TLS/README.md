@@ -1,6 +1,11 @@
+---
+gitea: none
+include_toc: true
+---
+
 # Based on
 
-- 01-hello_world_1_service_1_deployment
+- [01-hello_world_1_service_1_deployment](../../01-Simple/01-hello_world_1_service_1_deployment)
 
 # Description
 
@@ -11,6 +16,8 @@ On this example, we generate a TLS configuration, and afterwards we attach such 
 > - [Secure Gateways](https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/)
 
 # Configuration applied
+
+## Gateway
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -39,7 +46,7 @@ spec:
 - The TLS configuration is set to simple, and the credentials (the object that contains the certificates/TLS configuration) is set to `my-tls-cert-secret`.
 
 > **Note:**\
-> The credentials resource is created further bellow through the [Walkthrough](#Walkthrough) steps.
+> The credentials resource is created further bellow through the [Walkthrough](#walkthrough) steps.
 
 > **Note:**\
 > For more information regarding the TLS mode configuration, refer to the following [Istio documentation regarding the TLS mode field](https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSmode).
