@@ -1,4 +1,9 @@
 
+
+
+
+# Stuff
+
 ## Glossary
 
 https://istio.io/latest/docs/reference/glossary/
@@ -19,33 +24,11 @@ https://istio.io/latest/docs/ops/deployment/vm-architecture/
 https://kubebyexample.com/learning-paths/istio/intro
 
 
+# Notes for myself
 
-
-My current issues:
-
-- Understanding authentication
-
-
-https://tetrate.io/blog/istio-how-to-enforce-egress-traffic-using-istios-authorization-policies/
-
-
-
-
-
-
-
-Multiple Ingress
-
-https://youtu.be/QIkryA8HnQ0
-
-
-
-https://github.com/redkubes/otomi-core/blob/main/charts/team-ns/templates/istio-gateway.yaml
+Internal and external authentication should be set together.
 
 
 https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 
-
-
-Using service accounts
 
