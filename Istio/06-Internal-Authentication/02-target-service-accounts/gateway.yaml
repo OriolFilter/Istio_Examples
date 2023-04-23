@@ -4,7 +4,8 @@ metadata:
   name: helloworld-gateway
 spec:
   selector:
-    istio: ingressgateway # use istio default controller
+#    istio: ingressgateway # use istio default controller
+    istio: myingressgateway # use istio default controller
   servers:
     - port:
         number: 80

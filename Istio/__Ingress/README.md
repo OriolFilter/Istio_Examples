@@ -21,3 +21,17 @@ istio-ingress   service/myistio-ingressgateway   LoadBalancer   10.102.38.206   
 istio-ingress    deployment.apps/myistio-ingressgateway    1/1     1            1           44s
 istio-ingress    replicaset.apps/myistio-ingressgateway-5cdcd89cfb   1         1         1       44s
 istio-ingress   horizontalpodautoscaler.autoscaling/myistio-ingressgateway   Deployment/myistio-ingressgateway   <unknown>/80%   1         5         1          44s
+
+
+---
+
+It gets its own service account.
+
+We can use this to restrict the network activity and enforce traffic rules.
+
+```shell
+kubectl get pod -n istio-ingress myistio-ingressgateway-5cdcd89cfb-s4fsz -o jsonpath='{.spec.serviceAccount}' 
+```
+```text
+myistio-ingressgateway-service-account
+```

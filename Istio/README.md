@@ -34,7 +34,6 @@ https://tetrate.io/blog/istio-how-to-enforce-egress-traffic-using-istios-authori
 
 
 
-
 Multiple Ingress
 
 https://youtu.be/QIkryA8HnQ0
