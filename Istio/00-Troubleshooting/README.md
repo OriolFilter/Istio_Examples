@@ -39,6 +39,18 @@ istioctl analyze -n istio-operator
 Info [IST0102] (Namespace istio-operator) The namespace is not enabled for Istio injection. Run 'kubectl label namespace istio-operator istio-injection=enabled' to enable it, or 'kubectl label namespace istio-operator istio-injection=disabled' to explicitly mark it as not needing injection.
 ```
 
+## Example of spotting a misconfiguration
+
+In this example, I have configured the gateway to listen to a port that currently is not open in the Isito Load Balancer selected.
+
+```shell
+istioctl analyze
+```
+```text
+Warning [IST0104] (Gateway default/helloworld-gateway) The gateway refers to a port that is not exposed on the workload (pod selector istio=ingressgateway; port 81)
+```
+
+
 # Start the packet capture process on the istio-proxy container from a pod.
 
 Target a pod and start a packet capture on the istio-proxy container.
