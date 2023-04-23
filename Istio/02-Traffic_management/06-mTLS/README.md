@@ -30,7 +30,6 @@ From the Kiali dashboard we will review the mTLS label displayed
 ```shell
 kubectl apply -f ./
 ````
-
 ```txt
 peerauthentication.security.istio.io/default-mtls created
 service/helloworld created
@@ -46,9 +45,9 @@ virtualservice.networking.istio.io/helloworld-vs created
 [Source Folder](https://github.com/istio/istio/tree/master/samples/addons)
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/grafana.yaml && \
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/kiali.yaml && \
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/prometheus.yaml && \
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/grafana.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/kiali.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/prometheus.yaml
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/master/samples/addons/prometheus.yaml
 ```
 

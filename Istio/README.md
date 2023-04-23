@@ -1,6 +1,8 @@
+# Disclaimer:
 
+I have absolutely used as a reference and or template other party configurations/files.
 
-
+I have tried to reference as much as possible as long it's relevant/useful for the reader.
 
 # Stuff
 
