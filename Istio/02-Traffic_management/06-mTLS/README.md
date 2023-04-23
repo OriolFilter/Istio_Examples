@@ -3,7 +3,7 @@ gitea: none
 include_toc: true
 ---
 
-# Continues from
+# Based on
 
 - [01-hello_world_1_service_1_deployment](../../01-Simple/01-hello_world_1_service_1_deployment)
 
@@ -21,7 +21,6 @@ From the Kiali dashboard we will review the mTLS label displayed
 > If the PeerAuthentication is deployed in the `istio-system` namespace, it will affect all the namespaces in the cluster.
 
 # Changelog
-
 
 # Walkthrough
 
