@@ -161,6 +161,17 @@ x-envoy-upstream-service-time: 15
 [Yeah no idea, gl with that.](https://stackoverflow.com/a/55731730)
 
 ```shell
+kubectl delete -f ./deployment.yaml
+kubectl delete -f ./gateway.yaml
+```
+```text
+service "helloworld" deleted
+deployment.apps "helloworld-nginx" deleted
+gateway.networking.istio.io "helloworld-gateway" deleted
+virtualservice.networking.istio.io "helloworld-vs" deleted
+```
+
+```shell
 istioctl uninstall --purge
 ```
 
