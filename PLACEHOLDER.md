@@ -15,3 +15,9 @@ graph LR
     B --> YES --> C[GREAT!]
     D --> A
 ```
+
+
+> NOTE:\
+> Gitea has support for mermaid.\
+> Doesn't have support for puml.\
+> (obv talking about default behavior)
