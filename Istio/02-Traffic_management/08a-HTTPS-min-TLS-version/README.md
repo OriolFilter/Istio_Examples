@@ -152,18 +152,19 @@ x-envoy-upstream-service-time: 13
 kubectl delete -n istio-system secret my-tls-cert-secret
 ```
 ```text
-service "helloworld" deleted
-deployment.apps "helloworld-nginx" deleted
-gateway.networking.istio.io "helloworld-gateway" deleted
-virtualservice.networking.istio.io "helloworld-vs" deleted
+secret "my-tls-cert-secret" deleted
 ```
 
 ```shell
 kubectl delete -f ./
 ```
 ```text
-secret "my-tls-cert-secret" deleted
+service "helloworld" deleted
+deployment.apps "helloworld-nginx" deleted
+gateway.networking.istio.io "helloworld-gateway" deleted
+virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
+
 ```shell
 rm -rv certfolder/
 ```
