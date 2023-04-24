@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld
+  labels:
+    app: helloworld
+    service: helloworld
+spec:
+  ports:
+    - port: 8080
+      name: tcp-a
+      targetPort: 80
+      protocol: TCP
+
+    - port: 8443
+      name: tcp-b
+      targetPort: 443
+      protocol: TCP
+  selector:
+    app: helloworld
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-nginx
+  labels:
+    app: helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: helloworld
+#          image: nginx
+          image: oriolfilter/https-apache-demo:armv7
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 80
+            - containerPort: 443
