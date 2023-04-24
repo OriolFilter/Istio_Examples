@@ -1,0 +1,36 @@
+#apiVersion: networking.istio.io/v1beta1
+#kind: Gateway
+#metadata:
+#  name: helloworld-gateway
+#spec:
+#  selector:
+#    istio: ingressgateway
+#  servers:
+#    - hosts:
+#        - "*"
+#      port:
+#        name: https
+#        number: 443
+#        protocol: HTTPS
+#      tls:
+#        mode: PASSTHROUGH
+#---
+#apiVersion: networking.istio.io/v1beta1
+#kind: VirtualService
+#metadata:
+#  name: helloworld-vs
+#spec:
+#  gateways:
+#    - helloworld-gateway
+#  hosts: ["lb.net","*.lb.net"]
+##  http:
+##    - route:
+##        - destination:
+##            host: helloworld.default.svc.cluster.local
+##spec:
+#  tls:
+#    - match:
+#        - sniHosts: ["lb.net","*.lb.net"]
+#      route:
+#        - destination:
+#            host: helloworld.default.svc.cluster.local

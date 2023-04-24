@@ -55,6 +55,8 @@ Warning [IST0104] (Gateway default/helloworld-gateway) The gateway refers to a p
 
 Target a pod and start a packet capture on the istio-proxy container.
 
+This step requires istio to be installed with the flag `values.global.proxy.privileged=true`
+
 ```shell
 $ kubectl exec -n default  "$(kubectl get pod -n default -l app=helloworld -o jsonpath={.items..metadata.name})" -c istio-proxy -- sudo tcpdump dst port 80  -A
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
