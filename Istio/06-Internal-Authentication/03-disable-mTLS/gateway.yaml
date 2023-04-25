@@ -20,6 +20,7 @@ spec:
         - "*"
       tls:
         credentialName: my-tls-cert-secret
+        minProtocolVersion: TLSV1_2
         mode: SIMPLE
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -32,9 +33,16 @@ spec:
   gateways:
     - helloworld-gateway
   http:
-    - name: https-vs
+    - name: http-vs
       match:
         - port: 80
+      route:
+        - destination:
+            host: helloworld.default.svc.cluster.local
+            port:
+              number: 8080
+    - name: https-vs
+      match:
         - port: 443
       route:
         - destination:
@@ -51,6 +59,11 @@ spec:
     host: helloworld.default.svc.cluster.local
     trafficPolicy:
       portLevelSettings:
+        - port:
+            number: 8080
+          tls:
+            mode: SIMPLE
+
         - port:
             number: 8443
           tls:

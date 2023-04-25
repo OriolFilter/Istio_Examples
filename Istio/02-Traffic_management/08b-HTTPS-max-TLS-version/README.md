@@ -15,6 +15,8 @@ The previous example was modified to limit and specify the maximum TLS version.
 
 ## Gateway
 
+Gateway has been modified to limit the maximum TLS version to v1.2.
+
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -36,7 +38,6 @@ spec:
         maxProtocolVersion: TLSV1_2
 ```
 
-Gateway has been modified to limit the maximum TLS version to v1.2.
 
 # Walkthrough
 

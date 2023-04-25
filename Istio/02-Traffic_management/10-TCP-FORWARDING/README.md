@@ -24,7 +24,7 @@ Additionally, the backend used, has HTTP2 enable, which also will be used to con
 
 ## Gateway
 
-Gateway been configured to listen both ports `80` and `443` through the TCP protocol, without any host specified. 
+The gateway has been configured to listen both ports `80` and `443` through the TCP protocol, without any host specified. 
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -84,8 +84,8 @@ spec:
 
 ## Service
 
-The service will forward the incoming TCP traffic with port 8080, to the deployment port 80.
-The same behavior is applied for the service port 8443, that will be forwarded towards the port 443 from the deployment.
+The service will forward incoming traffic from the service port 8443, that will be forwarded towards the port 443 from the deployment.
+
 
 ```yaml
 apiVersion: v1
@@ -97,14 +97,11 @@ metadata:
     service: helloworld
 spec:
   ports:
-    - port: 8080
-      name: http-web
-      targetPort: 80
-      protocol: TCP
     - port: 8443
-      name: https-web
+      name: https
       targetPort: 443
       protocol: TCP
+      appProtocol: https
   selector:
     app: helloworld
 ```
@@ -143,6 +140,12 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
+```
+
+## PeerAuthentication
+
+```yaml
+
 ```
 
 # Walkthrough

@@ -20,7 +20,7 @@ This requires a deployment with a service HTTPS (as it will need to handle the T
 
 ## Gateway
 
-Gateway configured to listen the port `443` for `HTTPS` traffic protocol.
+The gateway was configured to listen the port `443` for `HTTPS` traffic protocol.
 
 The tls was configured as `PASSTHROUGH`
 
