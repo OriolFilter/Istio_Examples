@@ -9,7 +9,7 @@ include_toc: true
 
 # Description
 
-The previous example was modified set TCP forwarding towards the backend.
+The previous example was modified to set TCP forwarding towards the backend (HTTP and HTTPS backend).
 
 The backend contains an HTTPS service, which is used to demonstrate how the TCP forwarding is working as intended (aka doesn't disturb HTTP traffic). 
 
