@@ -1,0 +1,70 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: helloworld-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - "*"
+      tls:
+        credentialName: my-tls-cert-secret
+        minProtocolVersion: TLSV1_2
+        mode: SIMPLE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helloworld-vs
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - helloworld-gateway
+  http:
+    - name: http-vs
+      match:
+        - port: 80
+      route:
+        - destination:
+            host: helloworld.default.svc.cluster.local
+            port:
+              number: 8080
+    - name: https-vs
+      match:
+        - port: 443
+      route:
+        - destination:
+            host: helloworld.default.svc.cluster.local
+            port:
+              number: 8443
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld
+  namespace: default
+spec:
+    host: helloworld.default.svc.cluster.local
+    trafficPolicy:
+      portLevelSettings:
+        - port:
+            number: 8080
+          tls:
+            mode: SIMPLE
+
+        - port:
+            number: 8443
+          tls:
+            mode: SIMPLE

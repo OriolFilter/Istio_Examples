@@ -15,6 +15,8 @@ The previous example was modified to limit and specify the maximum TLS version.
 
 ## Gateway
 
+Gateway has been modified to limit the maximum TLS version to v1.2.
+
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -36,7 +38,6 @@ spec:
         maxProtocolVersion: TLSV1_2
 ```
 
-Gateway has been modified to limit the maximum TLS version to v1.2.
 
 # Walkthrough
 
@@ -149,17 +150,17 @@ curl: (35) OpenSSL/3.0.8: error:0A00042E:SSL routines::tlsv1 alert protocol vers
 kubectl delete -n istio-system secret my-tls-cert-secret
 ```
 ```text
-service "helloworld" deleted
-deployment.apps "helloworld-nginx" deleted
-gateway.networking.istio.io "helloworld-gateway" deleted
-virtualservice.networking.istio.io "helloworld-vs" deleted
+secret "my-tls-cert-secret" deleted
 ```
 
 ```shell
 kubectl delete -f ./
 ```
 ```text
-secret "my-tls-cert-secret" deleted
+service "helloworld" deleted
+deployment.apps "helloworld-nginx" deleted
+gateway.networking.istio.io "helloworld-gateway" deleted
+virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
 ```shell
 rm -rv certfolder/
@@ -173,3 +174,5 @@ removed directory 'certfolder/'
 # Links of Interest
 
 - https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSProtocol
+
+- https://discuss.istio.io/t/minimum-tls-version/5541/3

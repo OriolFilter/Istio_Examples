@@ -107,7 +107,7 @@ helloworld-nginx   1/1     1            1           44s
 ### Get LB IP
 
 ```shell
-$ kubectl get svc istio-ingressgateway -n istio-system 
+$ kubectl get svc -l istio=ingressgateway -A
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
