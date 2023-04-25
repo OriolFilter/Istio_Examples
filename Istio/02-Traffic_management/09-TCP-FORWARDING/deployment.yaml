@@ -8,12 +8,11 @@ metadata:
 spec:
   ports:
     - port: 8080
-      name: tcp-a
+      name: http-web
       targetPort: 80
       protocol: TCP
-
     - port: 8443
-      name: tcp-b
+      name: https-web
       targetPort: 443
       protocol: TCP
   selector:
@@ -34,16 +33,14 @@ spec:
     metadata:
       labels:
         app: helloworld
-        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: helloworld
-#          image: nginx
           image: oriolfilter/https-nginx-demo
           resources:
             requests:
               cpu: "100m"
-          imagePullPolicy: IfNotPresent #Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
             - containerPort: 443
