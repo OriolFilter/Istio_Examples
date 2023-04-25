@@ -164,7 +164,9 @@ virtualservice.networking.istio.io/helloworld-vs created
 ### Get LB IP
 
 ```shell
-$ kubectl get svc -l istio=ingressgateway -A
+kubectl get svc -l istio=ingressgateway -A
+```
+```text
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
@@ -232,8 +234,4 @@ virtualservice.networking.istio.io "helloworld-vs" deleted
 
 # Links of Interest
 
-- https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSProtocol
-
-- https://stackoverflow.com/a/51279606
-
-- https://istio.io/latest/docs/reference/config/networking/destination-rule/#ConnectionPoolSettings-HTTPSettings-H2UpgradePolicy
+- https://istio.io/latest/docs/reference/config/networking/gateway/#Gateway

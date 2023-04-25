@@ -7,17 +7,11 @@ metadata:
     service: helloworld
 spec:
   ports:
-    - port: 8080
-      name: http-s
-      targetPort: 80
-      protocol: TCP
-      appProtocol: HTTP
-
-    - port: 8443
-      name: https
+    - name: https
+      port: 8443
       targetPort: 443
       protocol: TCP
-      appProtocol: https
+      appProtocol: HTTPS
   selector:
     app: helloworld
 ---
@@ -36,7 +30,6 @@ spec:
     metadata:
       labels:
         app: helloworld
-        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: helloworld
@@ -48,33 +41,33 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx
-  labels:
-    app: nginx
-    version: v1
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-      version: v1
-  template:
-    metadata:
-      labels:
-        app: nginx
-        version: v1
-    spec:
-      #      serviceAccountName: istio-helloworld
-      containers:
-        - name: nginx
-          image: nginx
-          resources:
-            requests:
-              cpu: "100m"
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 80
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: nginx
+#  labels:
+#    app: nginx
+#    version: v1
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: nginx
+#      version: v1
+#  template:
+#    metadata:
+#      labels:
+#        app: nginx
+#        version: v1
+#    spec:
+#      #      serviceAccountName: istio-helloworld
+#      containers:
+#        - name: nginx
+#          image: nginx
+#          resources:
+#            requests:
+#              cpu: "100m"
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 80
