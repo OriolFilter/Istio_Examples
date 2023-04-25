@@ -177,3 +177,5 @@ removed directory 'certfolder/'
 # Links of Interest
 
 - https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSProtocol
+
+- https://discuss.istio.io/t/minimum-tls-version/5541/3
