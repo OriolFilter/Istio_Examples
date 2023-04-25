@@ -18,7 +18,7 @@ The same backend also contains the same service but running as HTTP, and for suc
 Additionally, the backend used, has HTTP2 enable, which also will be used to confirm that it's working as intended.
 
 > **Note:**\
-> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-apache-demo)
+> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
 
 # Configuration
 
@@ -111,7 +111,7 @@ spec:
 Deployment listens to port 80 and 443.
 
 > **Note:**\
-> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-apache-demo)
+> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
 
 ```yaml
 apiVersion: apps/v1

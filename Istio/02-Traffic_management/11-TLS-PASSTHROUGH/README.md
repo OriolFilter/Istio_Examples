@@ -14,7 +14,7 @@ The previous example was modified set TLS Forwarding for the HTTPS, meaning that
 This requires a deployment with a service HTTPS (as it will need to handle the TLS termination ...). 
 
 > **Note:**\
-> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-apache-demo)
+> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
 
 # Configuration
 
@@ -104,7 +104,7 @@ spec:
 Deployment listens to port 80 and 443.
 
 > **Note:**\
-> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-apache-demo)
+> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
 
 ```yaml
 apiVersion: apps/v1

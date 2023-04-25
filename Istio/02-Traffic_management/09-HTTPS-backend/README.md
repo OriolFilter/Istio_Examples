@@ -13,7 +13,7 @@ This example contains a backend that serves HTTPS traffic and can be accessed fr
 
 
 > **Note:**\
-> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-apache-demo)
+> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
 
 # Configuration
 
@@ -91,7 +91,7 @@ spec:
 
 This DestinationRule, will interject the traffic destined to the service `helloworld.default.svc.cluster.local` with port `8443`.
 
-As mentioned in the [Virtual Service](#virtual%20service) section, the destination is the `HTTPS` service.
+As mentioned in the [Virtual Service](#virtual-service) section, the destination is the `HTTPS` service.
 
 By default, the call would be made with `HTTP` protocol, yet, as the destination is an `HTTPS` service, the request would result in the status code `400 Bad Request`, due sending HTTP traffic to an HTTPS service.
 
@@ -148,7 +148,7 @@ spec:
 Deployment listens to port 80 and 443.
 
 > **Note:**\
-> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-apache-demo)
+> For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
 
 ```yaml
 apiVersion: apps/v1
@@ -183,7 +183,7 @@ spec:
 
 Due to the deployment having an `HTTPS`, and already initializing a TLS termination towards that service, we need to disable the **mTLS** tool for that specific service/deployment.
 
-On the [Destination Rule](#destination%20rule) section we set the `tls` to `simple`, meaning that the service is expecting to receive `HTTPS` traffic, if `mTLS` is enabled, it will perform the handshake with the `mTLS` service, instead of with the destination `HTTPS` service.
+On the [Destination Rule](#destination-rule) section we set the `tls` to `simple`, meaning that the service is expecting to receive `HTTPS` traffic, if `mTLS` is enabled, it will perform the handshake with the `mTLS` service, instead of with the destination `HTTPS` service.
 
 ```yaml
 apiVersion: security.istio.io/v1beta1
