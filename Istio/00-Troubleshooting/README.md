@@ -3,8 +3,6 @@ gitea: none
 include_toc: true
 ---
 
-
-
 # Istioctl analyze
 
 `istioctl analyze` reviews the current configuration set.
@@ -50,12 +48,15 @@ istioctl analyze
 Warning [IST0104] (Gateway default/helloworld-gateway) The gateway refers to a port that is not exposed on the workload (pod selector istio=ingressgateway; port 81)
 ```
 
-
 # Start the packet capture process on the istio-proxy container from a pod.
 
 Target a pod and start a packet capture on the istio-proxy container.
 
 This step requires istio to be installed with the flag `values.global.proxy.privileged=true`
+
+This is very useful to confirm if the service is receiving any traffic, or which is the traffic received.
+
+If mTLS is  enabled and configured, the traffic received should be encrypted.
 
 ```shell
 $ kubectl exec -n default  "$(kubectl get pod -n default -l app=helloworld -o jsonpath={.items..metadata.name})" -c istio-proxy -- sudo tcpdump dst port 80  -A
