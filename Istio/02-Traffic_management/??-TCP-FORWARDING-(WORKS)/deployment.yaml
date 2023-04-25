@@ -39,7 +39,7 @@ spec:
       containers:
         - name: helloworld
 #          image: nginx
-          image: oriolfilter/https-apache-demo:armv7
+          image: oriolfilter/https-nginx-demo
           resources:
             requests:
               cpu: "100m"
