@@ -57,7 +57,7 @@ spec:
 > **Note:**\
 > For more information regarding the TLS mode configuration, refer to the following [Istio documentation regarding the TLS mode field](https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSmode).
 
-## Virtual service
+## VirtualService
 
 The rule that contains, will receive traffic from the port `443` and `80`.
 
@@ -91,7 +91,7 @@ spec:
 
 This DestinationRule, will interject the traffic destined to the service `helloworld.default.svc.cluster.local` with port `8443`.
 
-As mentioned in the [Virtual Service](#virtual-service) section, the destination is the `HTTPS` service.
+As mentioned in the [Virtual Service](#virtualservice) section, the destination is the `HTTPS` service.
 
 By default, the call would be made with `HTTP` protocol, yet, as the destination is an `HTTPS` service, the request would result in the status code `400 Bad Request`, due sending HTTP traffic to an HTTPS service.
 
@@ -183,7 +183,7 @@ spec:
 
 Due to the deployment having an `HTTPS`, and already initializing a TLS termination towards that service, we need to disable the **mTLS** tool for that specific service/deployment.
 
-On the [Destination Rule](#destination-rule) section we set the `tls` to `simple`, meaning that the service is expecting to receive `HTTPS` traffic, if `mTLS` is enabled, it will perform the handshake with the `mTLS` service, instead of with the destination `HTTPS` service.
+On the [Destination Rule](#destinationrule) section we set the `tls` to `simple`, meaning that the service is expecting to receive `HTTPS` traffic, if `mTLS` is enabled, it will perform the handshake with the `mTLS` service, instead of with the destination `HTTPS` service.
 
 ```yaml
 apiVersion: security.istio.io/v1beta1
@@ -328,10 +328,12 @@ kubectl delete -f ./
 ```
 
 ```text
+peerauthentication.security.istio.io "default-mtls" deleted
 service "helloworld" deleted
 deployment.apps "helloworld-nginx" deleted
 gateway.networking.istio.io "helloworld-gateway" deleted
 virtualservice.networking.istio.io "helloworld-vs" deleted
+destinationrule.networking.istio.io "helloworld" deleted
 ```
 
 # Links of Interest
