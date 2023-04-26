@@ -6,7 +6,7 @@ include_toc: true
 # Continues from
 
 [//]: # (- [01-hello_world_1_service_1_deployment]&#40;../../01-simple/01-hello_world_1_service_1_deployment&#41;)
-- [01-namespaces](../01-namespaces)
+- [01-namespaces](../01-target-namespaces)
 
 > **Note:**\
 > On this example there is minimal changes to the configuration to involve targeting service accounts.
