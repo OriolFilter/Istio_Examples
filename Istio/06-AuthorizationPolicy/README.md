@@ -10,7 +10,17 @@
 
 - Audit / logs (should be the 3th)
 
+- disable mTLS (4th)
 
 JWT seems important, refer to source.requestPrincipals
 
 https://istio.io/latest/docs/tasks/security/authentication/
+
+
+
+Per deployment:
+```yaml
+  selector:
+    matchLabels:
+      app: myapi
+```
