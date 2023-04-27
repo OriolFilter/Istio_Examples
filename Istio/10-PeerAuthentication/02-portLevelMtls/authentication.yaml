@@ -1,0 +1,15 @@
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: helloworld-mtls
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: helloworld
+      mtls: "false"
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    443:
+      mode: DISABLE
