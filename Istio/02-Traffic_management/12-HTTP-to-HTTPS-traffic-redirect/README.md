@@ -130,6 +130,16 @@ gateway.networking.istio.io/helloworld-gateway created
 
 ## Test the service
 
+### Get LB IP
+
+```shell
+kubectl get svc -l istio=ingressgateway -A
+```
+```text
+NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
+istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
+```
+
 ### Curl --HEAD
 
 We receive the status message `301 Moved Permanently`.
