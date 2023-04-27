@@ -51,6 +51,11 @@ For more information about this behavior, refer to:
 https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/#explicit-protocol-selection
 
 
+
+# Workload selector is cool
+
+- https://istio.io/latest/docs/reference/config/type/workload-selector/#WorkloadSelector
+
 # Links of interest
 
 - https://istiobyexample.dev/

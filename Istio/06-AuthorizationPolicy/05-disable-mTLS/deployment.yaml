@@ -1,42 +1,21 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: helloworld
-  labels:
-    app: helloworld
-    service: helloworld
-spec:
-  ports:
-    - port: 8080
-      name: http
-      targetPort: 80
-      protocol: TCP
-      appProtocol: http
-
-    - port: 8443
-      name: https
-      targetPort: 443
-      protocol: TCP
-      appProtocol: https
-  selector:
-    app: helloworld
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-nginx
+  name: helloworld-mtls
   labels:
     app: helloworld
+    mtls: "true"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: helloworld
+      mtls: "true"
   template:
     metadata:
       labels:
         app: helloworld
-        sidecar.istio.io/inject: "true"
+        mtls: "true"
     spec:
       containers:
         - name: helloworld
@@ -44,7 +23,7 @@ spec:
           resources:
             requests:
               cpu: "100m"
-          imagePullPolicy: Always #Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
             - containerPort: 443
@@ -52,28 +31,29 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: helloworld-nomtls
   labels:
-    app: nginx
-    version: v1
+    app: helloworld
+    mtls: "false"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
-      version: v1
+      app: helloworld
+      mtls: "false"
   template:
     metadata:
       labels:
-        app: nginx
-        version: v1
+        app: helloworld
+        mtls: "false"
     spec:
       containers:
-        - name: nginx
-          image: nginx
+        - name: helloworld-nomtls
+          image: oriolfilter/https-nginx-demo
           resources:
             requests:
               cpu: "100m"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+            - containerPort: 443

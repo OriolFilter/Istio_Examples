@@ -160,6 +160,7 @@ kubectl get svc -l istio=ingressgateway -A
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
+
 ### curl HTTPS
 
 Well, it just works.
