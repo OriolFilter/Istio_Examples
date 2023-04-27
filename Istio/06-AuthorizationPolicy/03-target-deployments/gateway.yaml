@@ -28,8 +28,18 @@ spec:
             exact: /helloworld
       route:
         - destination:
-            host: helloworld
+            host: helloworld.default.svc.cluster.local
             port:
-              number: 80
+              number: 8080
+      rewrite:
+        uri: "/"
+    - match:
+        - uri:
+            exact: /byeworld
+      route:
+        - destination:
+            host: byeworld.foo.svc.cluster.local
+            port:
+              number: 9090
       rewrite:
         uri: "/"
