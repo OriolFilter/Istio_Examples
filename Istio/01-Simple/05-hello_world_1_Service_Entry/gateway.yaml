@@ -1,4 +1,3 @@
-# https://github.com/istio/istio/blob/master/samples/helloworld/helloworld-gateway.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -24,29 +23,32 @@ spec:
   gateways:
     - helloworld-gateway
   http:
-    - match:
-        - uri:
-            exact: /helloworld
-      route:
-        - destination:
-            host: helloworld
-            port:
-              number: 80
-      rewrite:
-        uri: "/"
-
-    - timeout: 3s
+    - name: https-external-service
+      timeout: 3s
       match:
         - uri:
             exact: "/external"
       route:
         - destination:
-            host: help.websiteos.com
+            host: info.cern.ch
             port:
               number: 80
       rewrite:
-        uri: "/websiteos/example_of_a_simple_html_page.htm"
+        uri: "/"
       headers:
         request:
           set:
-            HOST: "help.websiteos.com"
+            HOST: "info.cern.ch"
+
+    - name: https-external-service-without-headers
+      timeout: 3s
+      match:
+        - uri:
+            exact: "/external-noh"
+      route:
+        - destination:
+            host: info.cern.ch
+            port:
+              number: 80
+      rewrite:
+        uri: "/"
