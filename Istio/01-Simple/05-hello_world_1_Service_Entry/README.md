@@ -144,6 +144,8 @@ virtualservice.networking.istio.io/helloworld-vs created
 
 ```shell
 $ kubectl get svc -l istio=ingressgateway -A
+```
+```text
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
@@ -180,7 +182,7 @@ This could be due, even if we resolve the destination IP for the URL `info.cern.
 Due to the `HOST` field not being modified after we set the request, it might not be able to pass the filtering set, weather it is security wise, for example, requiring such field to allow the request; or it being a routing condition, which due not having this field specified, it's not able to route the request towards the destination desired.
 
 ```shell
-curl 192.168.1.50/external
+curl 192.168.1.50/external-noh
 ```
 ```text
 ```
