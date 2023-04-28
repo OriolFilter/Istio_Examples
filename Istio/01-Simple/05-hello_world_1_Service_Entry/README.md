@@ -81,6 +81,8 @@ The difference between `/external` and `/external-noh` is that the first path wi
 
 On the [Walkthrough](#walkthrough) section we will observe the different behaviors of these paths, being the only difference the header attributed.
 
+Also, we have set a timeout of 3 seconds towards the external services.
+
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
