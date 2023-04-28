@@ -20,7 +20,7 @@ Through this, we can apply multiple `mTLS` behaviors under a single deployment, 
 
 ## Gateway
 
-Listens for `HTTP` traffic without limiting to any host.
+Listens for `HTTP` traffic at the port `80` without limiting to any host.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
