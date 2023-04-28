@@ -7,7 +7,6 @@ spec:
   selector:
     matchLabels:
       app: helloworld
-      mtls: "false"
   mtls:
     mode: STRICT
   portLevelMtls:
