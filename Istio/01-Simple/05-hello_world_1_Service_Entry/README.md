@@ -183,6 +183,17 @@ curl 192.168.1.50/external
 ```text
 ```
 
+## Cleanup
+
+```shell
+kubectl delete -f ./
+```
+```text
+serviceentry.networking.istio.io "external-cern-service" deleted
+gateway.networking.istio.io "helloworld-gateway" deleted
+virtualservice.networking.istio.io "helloworld-vs" deleted
+```
+
 # Links of interest:
 
 - https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Location
