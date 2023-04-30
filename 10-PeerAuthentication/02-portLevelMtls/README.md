@@ -312,7 +312,7 @@ listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 
 ##### Curl
 
-Even tho, we have set in the [PeerAuthentication configuration](#peerauthentication) mode to `STRICT`, unlike in the [previous example](../01-disable-mTLS/#https-1), where the mode was also set to `STRICT`, in this example we configured the `portLevelMtls` field for the port `443`, successfully disabling `mTLS` for this port, and allowing to proceed with the request towards the `HTTPS` backend; which was performed without the need of disabling `mTLS` for the whole deployment. 
+Even tho, we have set in the [PeerAuthentication configuration](#peerauthentication) mode to `STRICT`, unlike in the [previous example](01-disable-mTLS/#https-1), where the mode was also set to `STRICT`, in this example we configured the `portLevelMtls` field for the port `443`, successfully disabling `mTLS` for this port, and allowing to proceed with the request towards the `HTTPS` backend; which was performed without the need of disabling `mTLS` for the whole deployment. 
 
 ```shell
 curl 192.168.1.50/https
