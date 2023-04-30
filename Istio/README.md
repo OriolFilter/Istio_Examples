@@ -33,6 +33,7 @@ Internal and external authentication should be set together.
 
 https://istio.io/latest/docs/ops/diagnostic-tools/proxy-cmd/
 
+https://istio.io/latest/docs/ops/deployment/deployment-models/
 
 ## Services port names
 
