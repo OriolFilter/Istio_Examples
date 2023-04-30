@@ -169,7 +169,7 @@ I mean, we can use curl but it's certainly quite an ugly output, it works tho.
 
 As performing the test through `curl` is ugly, here is a screenshot of the setting working correctly.
 
-![github-screenshot.png](./src/github-screenshot.png)
+![github-screenshot.png](src/github-screenshot.png)
 
 ## Cleanup
 
