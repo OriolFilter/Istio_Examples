@@ -119,7 +119,7 @@ virtualservice.networking.istio.io/helloworld-vs created
 ### Deploy deployment
 
 ```shell
-kubectl apply -f deployment.yaml
+kubectl apply -f deployment-nomtls.yaml
 ```
 ```text
 service/helloworld created
@@ -161,7 +161,7 @@ x-envoy-upstream-service-time: 15
 [Yeah no idea, gl with that.](https://stackoverflow.com/a/55731730)
 
 ```shell
-kubectl delete -f ./deployment.yaml
+kubectl delete -f ./deployment-nomtls.yaml
 kubectl delete -f ./gateway.yaml
 ```
 ```text

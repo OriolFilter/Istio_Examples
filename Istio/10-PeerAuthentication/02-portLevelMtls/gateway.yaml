@@ -12,16 +12,6 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
-    - port:
-        number: 443
-        name: https
-        protocol: HTTPS
-      hosts:
-        - "*"
-      tls:
-        credentialName: my-tls-cert-secret
-        minProtocolVersion: TLSV1_2
-        mode: SIMPLE
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -33,38 +23,40 @@ spec:
   gateways:
     - helloworld-gateway
   http:
-    - name: http-vs
+    - name: http-mTLS
       match:
         - port: 80
+          uri:
+            exact: "/http"
       route:
         - destination:
             host: helloworld.default.svc.cluster.local
             port:
               number: 8080
-    - name: https-vs
+      rewrite:
+        uri: "/"
+    - name: https-mTLS
       match:
-        - port: 443
+        - port: 80
+          uri:
+           exact: "/https"
       route:
         - destination:
             host: helloworld.default.svc.cluster.local
             port:
               number: 8443
+      rewrite:
+        uri: "/"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: helloworld
-  namespace: default
+  name: helloworld.default.svc.cluster.local
 spec:
-    host: helloworld.default.svc.cluster.local
-    trafficPolicy:
-      portLevelSettings:
-        - port:
-            number: 8080
-          tls:
-            mode: SIMPLE
-
-        - port:
-            number: 8443
-          tls:
-            mode: SIMPLE
+  host: helloworld.default.svc.cluster.local
+  trafficPolicy:
+    portLevelSettings:
+      - port:
+          number: 8443
+        tls:
+          mode: SIMPLE # Required for https backend

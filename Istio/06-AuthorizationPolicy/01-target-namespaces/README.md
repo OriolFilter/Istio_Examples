@@ -5,7 +5,6 @@ include_toc: true
 
 # Continues from
 
-[//]: # (- [01-hello_world_1_service_1_deployment]&#40;../../01-simple/01-hello_world_1_service_1_deployment&#41;)
 - [06-mTLS](../../02-Traffic_management/06-mTLS)
 
 ## Description
@@ -14,7 +13,7 @@ Bla bla bla
 
 Configuration targeting namespaces
 
-# Changelog
+# Configuration
 
 ## Authentication configuration deployed
 
@@ -123,7 +122,7 @@ namespace/foo created
 authorizationpolicy.security.istio.io/allow-nothing created
 authorizationpolicy.security.istio.io/allow-nothing created
 authorizationpolicy.security.istio.io/allow-from-istio-system created
-authorizationpolicy.security.istio.io/allow-get-from-default created
+authorizationpolicy.security.istio.io/allow-head-from-default created
 service/helloworld created
 deployment.apps/helloworld-nginx created
 service/byeworld created
@@ -198,7 +197,7 @@ x-envoy-upstream-service-time: 91
 
 It works.
 
-Due to the rule `allow-get-from-default` deployed on the namespace `foo`, which allowed the traffic coming from the namespace `default` as long it used the method `HEAD` and wasn't targeting the path `/secret`, the request is allowed.
+Due to the rule `allow-head-from-default` deployed on the namespace `foo`, which allowed the traffic coming from the namespace `default` as long it used the method `HEAD` and wasn't targeting the path `/secret`, the request is allowed.
 
 
 
@@ -254,7 +253,7 @@ x-envoy-upstream-service-time: 65
 
 #### helloworld towards byeworld/secret
 
-Due to the configuration set on the rule `allow-get-from-default`, one of the conditions for it to allow the traffic, was to not access the path/match the prefix expression  `/secret*`.
+Due to the configuration set on the rule `allow-head-from-default`, one of the conditions for it to allow the traffic, was to not access the path/match the prefix expression  `/secret*`.
 
 This causes the traffic to not be allowed.
 

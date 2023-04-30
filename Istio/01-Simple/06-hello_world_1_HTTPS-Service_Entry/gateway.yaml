@@ -23,32 +23,33 @@ spec:
   gateways:
     - helloworld-gateway
   http:
-    - name: http-external-service
+    - name: https-external-service
       timeout: 3s
       match:
         - uri:
             exact: "/external"
       route:
         - destination:
-            host: info.cern.ch
+            host: "github.com"
             port:
-              number: 80
+              number: 8443
       rewrite:
-        uri: "/"
+        uri: "/OriolFilter/"
       headers:
         request:
           set:
-            HOST: "info.cern.ch"
-
-    - name: https-external-service-without-headers
-      timeout: 3s
-      match:
-        - uri:
-            exact: "/external-noh"
-      route:
-        - destination:
-            host: info.cern.ch
-            port:
-              number: 80
-      rewrite:
-        uri: "/"
+            HOST: "github.com"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: github.com
+  namespace: default
+spec:
+  host: github.com
+  trafficPolicy:
+    portLevelSettings:
+      - port:
+          number: 8443
+        tls:
+          mode: SIMPLE

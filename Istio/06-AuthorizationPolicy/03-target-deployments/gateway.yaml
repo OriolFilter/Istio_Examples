@@ -1,8 +1,7 @@
-
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: bookinfo-gateway
+  name: helloworld-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -17,36 +16,30 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: bookinfo
+  name: helloworld-vs
 spec:
   hosts:
     - "*"
   gateways:
-    - bookinfo-gateway
+    - helloworld-gateway
   http:
-    - match:
-        - uri:
-            exact: /productpage
-        - uri:
-            prefix: /static
-        - uri:
-            exact: /login
-        - uri:
-            exact: /logout
-        - uri:
-            prefix: /api/v1/products
-      route:
-        - destination:
-            host: productpage
-            port:
-              number: 9080
     - match:
         - uri:
             exact: /helloworld
       route:
         - destination:
-            host: productpage
+            host: helloworld.default.svc.cluster.local
             port:
-              number: 9080
+              number: 8080
       rewrite:
-        uri: "/productpage"
+        uri: "/"
+    - match:
+        - uri:
+            exact: /byeworld
+      route:
+        - destination:
+            host: byeworld.foo.svc.cluster.local
+            port:
+              number: 9090
+      rewrite:
+        uri: "/"

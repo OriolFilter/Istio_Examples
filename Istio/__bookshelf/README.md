@@ -1,1 +1,0 @@
-# Example from istio, storing it for testing purposes

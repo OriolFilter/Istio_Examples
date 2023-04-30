@@ -84,7 +84,7 @@ spec:
 
 ## Service
 
-The service will forward incoming traffic from the service port 8443, that will be forwarded towards the port 443 from the deployment.
+The service will forward incoming traffic from the service port `8443`, that will be forwarded towards the port `443` from the deployment.
 
 
 ```yaml

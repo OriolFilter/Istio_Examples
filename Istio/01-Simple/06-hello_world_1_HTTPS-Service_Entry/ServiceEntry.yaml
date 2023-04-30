@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: external-github-service
+spec:
+  hosts:
+    - github.com
+  ports:
+    - number: 8443
+      name: https
+      protocol: HTTPS
+      targetPort: 443
+  resolution: DNS
+  location: MESH_EXTERNAL
