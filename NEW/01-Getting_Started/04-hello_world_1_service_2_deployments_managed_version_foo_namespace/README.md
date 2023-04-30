@@ -5,13 +5,14 @@ include_toc: true
 
 # Description
 
-Based on the [previous example](../02-hello_world_1_service_2_deployments_unmanaged), where we created 2 deployments under the same service, we will attribute different tags to each Deployment, and afterwards, through the usage of a [DestinationRule](#destinationrule), internationally target the desired backend to route the traffic towards it. 
+Based on the [previous example](../03-hello_world_1_service_2_deployments_managed_version), we create the previous deployments in a different namespace than the Istio VirtualService object, in this case we create them in the namespace `foo`.
 
 This is example is based on the following post regarding [canary deployments on Istio](https://istio.io/latest/blog/2017/0.1-canary/).
 
 This example configures:
 
     Generic Kubernetes resources:
+    - 1 Namespace
     - 1 Service
     - 2 Deployments
     
@@ -22,13 +23,26 @@ This example configures:
 
 Additionally, for consistency, now the resources are being created in the `default` namespace.
 
+On this example, the `service`, the `deployment`, and the Istio `DestinationRule` are being created in the namespace `foo`.
+
 As well, on the [VirtualService section](#virtualservice), we are targeting the service `helloworld` by the full URL, where on previous examples it was targeted by `helloworld`, now it's targeted by `helloworld.default.svc.cluster.local`.
 
 # Based on
 
-- [02-hello_world_1_service_2_deployments_unmanaged](../02-hello_world_1_service_2_deployments_unmanaged)
+- [03-hello_world_1_service_2_deployments_managed_version](../03-hello_world_1_service_2_deployments_managed_version)
 
 # Configuration
+
+## Namespace
+
+Creates a namespace named `foo`.
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: foo
+```
 
 ## Service
 
@@ -36,11 +50,14 @@ Creates a service named `helloworld`.
 
 This service listens for the port `80` expecting `HTTP` traffic and will forward the incoming traffic towards the port `80` from the destination pod.
 
+The service is created in the namespace `foo`.
+
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: helloworld
+  namespace: foo
   labels:
     app: helloworld
     service: helloworld
@@ -60,15 +77,17 @@ Deploys a Nginx server that listens for the port `80`.
 
 On this deployment, we attributed the label `version` set to `v1`, this will be used by the [DestinationRule](#destinationrule) resource to target this deployment.
 
+The deployment is created in the namespace `foo`.
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-v1
+  namespace: foo
   labels:
     app: helloworld
     version: v1
-  namespace: default
 spec:
   replicas: 1
   selector:
@@ -98,15 +117,17 @@ Deploys an Apache server that listens for the port `80`.
 
 On this deployment, we attributed the label `version` set to `v2`, this will be used by the [DestinationRule](#destinationrule) resource to target this deployment.
 
+The deployment is created in the namespace `foo`.
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-v2
+  namespace: foo
   labels:
     app: helloworld
     version: v2
-  namespace: default
 spec:
   replicas: 1
   selector:
@@ -141,7 +162,6 @@ The `selector` field is used to "choose" which Istio Load Balancers will have th
 The Istio `default` profile creates a Load Balancer in the namespace `istio-system` that has the label `istio: ingressgateway` set, allowing us to target that specific Load Balancer and assign this gateway resource to it.
 
 
-
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -170,7 +190,7 @@ On this resource, we are also not limiting the incoming traffic to any specific 
 
 Here we created a rule that will be applied on `HTTP` related traffic (including `HTTPS` and `HTTP2`) when the destination path is exactly `/helloworld`.
 
-This traffic will be forwarded to the port `80` of the destination service `helloworld` (the full path URL equivalent would be `helloworld.$NAMESPACE.svc.cluster.local`).
+This traffic will be forwarded to the port `80` of the destination service `helloworld` located in the namespace `foo`.
 
 There will be an internal URL rewrite set, as if the URL is not modified, it would attempt to reach to the `/helloworld` path from the Nginx deployment, which currently has no content and would result in an error code `404` (Not found).
 
@@ -198,15 +218,13 @@ spec:
             exact: /helloworld
       route:
         - destination:
-            host: helloworld.default.svc.cluster.local
-            #            host: helloworld (OLD)
+            host: helloworld.foo.svc.cluster.local
             port:
               number: 80
             subset: v1
           weight: 20
         - destination:
-            #            host: helloworld (OLD)
-            host: helloworld.default.svc.cluster.local
+            host: helloworld.foo.svc.cluster.local
             port:
               number: 80
             subset: v2
@@ -214,25 +232,24 @@ spec:
       rewrite:
         uri: "/"
 ```
-
 ## DestinationRule
 
-This `DestinationRule` interferes with the traffic with destination `helloworld.default.svc.cluster.local`.
+This `DestinationRule` interferes with the traffic with destination `helloworld.foo.svc.cluster.local`.
 
 Contains 2 subsets defined, where each one will target a different backend.
 
 A reminder that the `version: v1` was given to the Nginx backend, meanwhile the Apache backend had set `version: v2`.
 
+This resource is created in the namespace `foo`.
+
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  # name: helloworld (OLD)
-  name: helloworld.default.svc.cluster.local # Destination that will "interject"
-  namespace: default
+  name: helloworld
+  namespace: foo
 spec:
-  #  host: helloworld # destination service (OLD)
-  host: helloworld.default.svc.cluster.local # Full destination service, lil better for consistency
+  host: helloworld.foo.svc.cluster.local # Full destination service, lil better for consistency
   subsets:
     - name: v1
       labels:
@@ -242,7 +259,6 @@ spec:
         version: v2
 ```
 
-# Walkthrough
 
 ## Deploy resources
 
@@ -291,117 +307,54 @@ istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/
 
 ### Curl
 
-By performing a series of curls, we can notice how the output received iterates between Nginx and Apache.
+As we can see, we can reach out to the service, now located in the namespace `foo`.
 
-If we take into account the configuration set, and we review the results, we can notice how the ratio is close to the one configured in the [VirtualService](#virtualservice) section.
+As well, if we check the ration on which we reached the backends, we can still see how the [VirtualService](#virtualservice) weight configured to the subsets is still being applied.
 
-> Nginx instances (v1): 2 \
-> Apache instances (v2): 9
+> Nginx: 3\
+> Apache: 9
 
 ```text
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
 <html><body><h1>It works!</h1></body></html>
 
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
 <html><body><h1>It works!</h1></body></html>
 
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
 <html><body><h1>It works!</h1></body></html>
 
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
 <html><body><h1>It works!</h1></body></html>
 
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
-<html><body><h1>It works!</h1></body></html>
-
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
-<html><body><h1>It works!</h1></body></html>
-
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
-<html><body><h1>It works!</h1></body></html>
-
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
-<html><body><h1>It works!</h1></body></html>
-
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
 <h1>Welcome to nginx!</h1>
 
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>" 
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
 <html><body><h1>It works!</h1></body></html>
 
-$ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<html><body><h1>It works!</h1></body></html>
+
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
 <h1>Welcome to nginx!</h1>
+
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<html><body><h1>It works!</h1></body></html>
+
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<html><body><h1>It works!</h1></body></html>
+
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<h1>Welcome to nginx!</h1>
+
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<html><body><h1>It works!</h1></body></html>
+
+$ 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
+<html><body><h1>It works!</h1></body></html>
 ```
 
-## Check Istio internal configurations created
-
-Using the command `istioctl x describe pod $POD`, we can see which Istio configuration is currently attributed to that specific pod.
-
-### v1
-
-We can notice the following line:
-
-`Weight 20%`
-
-Which matches the configuration set in the [VirtualService](#virtualservice) configuration.
-
-```sh
-istioctl x describe pod $(kubectl get pod -l app=helloworld,version=v1 -o jsonpath='{.items[0].metadata.name}')
-```
-```text
-Pod: helloworld-v1-7454b56b86-4cksf
-   Pod Revision: default
-   Pod Ports: 80 (helloworld), 15090 (istio-proxy)
---------------------
-Service: helloworld
-   Port: http 80/HTTP targets pod port 80
-DestinationRule: helloworld for "helloworld.default.svc.cluster.local"
-   Matching subsets: v1
-      (Non-matching subsets v2)
-   No Traffic Policy
---------------------
-Effective PeerAuthentication:
-   Workload mTLS mode: PERMISSIVE
-
-
-Exposed on Ingress Gateway http://192.168.1.50
-VirtualService: helloworld-vs
-   Weight 20%
-   /helloworld
-```
-
-### v2
-
-We can notice the following line:
-
-`Weight 80%`
-
-Which matches the configuration set in the [VirtualService](#virtualservice) configuration.
-
-```shell
-istioctl x describe pod `kubectl get pod -l app=helloworld,version=v2 -o jsonpath='{.items[0].metadata.name 
-```
-```text
-Pod: helloworld-v2-64b5656d99-5bwgr
-   Pod Revision: default
-   Pod Ports: 80 (helloworld), 15090 (istio-proxy)
---------------------
-Service: helloworld
-   Port: http 80/HTTP targets pod port 80
-DestinationRule: helloworld for "helloworld.default.svc.cluster.local"
-   Matching subsets: v2
-      (Non-matching subsets v1)
-   No Traffic Policy
---------------------
-Effective PeerAuthentication:
-   Workload mTLS mode: PERMISSIVE
-
-
-Exposed on Ingress Gateway http://192.168.1.50
-VirtualService: helloworld-vs
-   Weight 80%
-   /helloworld
-```
 
 ## Cleanup
 
@@ -411,16 +364,11 @@ Finally, a cleanup from the resources deployed.
 kubectl delete -f ./
 ```
 ```text
+namespace "foo" deleted
 deployment.apps "helloworld-v1" deleted
 deployment.apps "helloworld-v2" deleted
-destinationrule.networking.istio.io "helloworld.default.svc.cluster.local" deleted
+destinationrule.networking.istio.io "helloworld" deleted
 gateway.networking.istio.io "helloworld-gateway" deleted
 service "helloworld" deleted
 virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
-
-
-# Links of Interest
-
-- https://istio.io/latest/blog/2017/0.1-canary/
-- https://istio.io/latest/docs/reference/config/networking/destination-rule/#DestinationRule

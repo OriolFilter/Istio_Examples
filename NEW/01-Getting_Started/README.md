@@ -14,16 +14,9 @@ On these examples you will find the following Istio resources:
 
 - 02-hello_world_1_service_2_deployments_unmanaged
 
-- ALL NEEDS DOCUMENTATION
-
 - 03-hello_world_1_service_2_deployments_managed_version
 
-- 04-hello_world_1_service_2_deployments_managed_version_defaultnt_namespace
-
-- 05-hello_world_1_Service_Entry
-
-
-
+- 04-hello_world_1_service_2_deployments_managed_version_foo_namespace
 
 
 # How to get started?
