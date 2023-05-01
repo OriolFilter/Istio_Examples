@@ -1,1 +1,0 @@
-https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/
