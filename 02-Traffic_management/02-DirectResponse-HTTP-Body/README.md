@@ -176,9 +176,8 @@ Wait for the Apache and Nginx deployments to be up and ready.
 kubectl get deployment helloworld-nginx -w
 ```
 ```text 
-NAME            READY   UP-TO-DATE   AVAILABLE   AGE
-helloworld-v1   1/1     1            1           4m1s
-helloworld-v2   1/1     1            1           4m1s
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+helloworld-nginx   1/1     1            1           9s
 ```
 
 ## Test the service
