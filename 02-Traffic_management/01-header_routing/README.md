@@ -437,12 +437,12 @@ Finally, a cleanup from the resources deployed.
 kubectl delete -f ./
 ```
 ```text
+deployment.apps "helloworld-v0" deleted
 deployment.apps "helloworld-v1" deleted
 deployment.apps "helloworld-v2" deleted
 destinationrule.networking.istio.io "helloworld.default.svc.cluster.local" deleted
 gateway.networking.istio.io "helloworld-gateway" deleted
 service "helloworld" deleted
-virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
 
 
