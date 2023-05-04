@@ -391,7 +391,7 @@ curl 192.168.1.50/helloworld -s
 
 Through using the Firefox web browser, the page accessed is the Nginx deployment. 
 
-![firefox.png](src%2Ffirefox.png)
+![firefox.png](./src/firefox.png)
 
 ### Default
 To trigger the "default" rule, you can be quite creative there, like using another browser some other tool.
