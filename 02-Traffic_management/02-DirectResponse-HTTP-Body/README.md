@@ -111,7 +111,7 @@ The configuration set, targets the [gateway created](#gateway) as well of not li
 
 We configure 2 rules for HTTP traffic (this includes `HTTPS` and `HTTP2`, this will be my last warning about this).
 
-The first rule configure will match when the requested path is `/helloworld`.
+The first rule configured will match when the requested path is `/helloworld`.
 
 This traffic will be forwarded to the service `helloworld.default.svc.cluster.local` with port `80`.
 
