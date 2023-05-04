@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld.default.svc.cluster.local # Destination that will "interject"
+spec:
+  host: helloworld.default.svc.cluster.local # Full destination service, lil better for consistency
+  subsets:
+    - name: default
+      labels:
+        version: v0
+    - name: nginx
+      labels:
+        version: v1
+    - name: apache
+      labels:
+        version: v2

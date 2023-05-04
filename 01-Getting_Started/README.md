@@ -23,6 +23,11 @@ On these examples you will find the following Istio resources:
 
 - 04-hello_world_1_service_2_deployments_managed_version_foo_namespace
 
+## Requirements:
+
+- A Kubernetes cluster (with a CNI network plugin, on my environment I have used [Calico](https://docs.tigera.io/calico/))
+
+- Istio installed
 
 # How to get started?
 
@@ -30,7 +35,7 @@ On these examples you will find the following Istio resources:
 
 Follow [this](https://istio.io/latest/docs/setup/getting-started/) guide to install the `default` profile.
 
-Specifically, the steps of [Download Istio](https://istio.io/latest/docs/setup/getting-started/#download) and [Install Istio][https://istio.io/latest/docs/setup/getting-started/#install). 
+Specifically, the steps of [Download Istio](https://istio.io/latest/docs/setup/getting-started/#download) and [Install Istio](https://istio.io/latest/docs/setup/getting-started/#install). 
 
 Once this is set, proceed with the rest of the installation.
 
