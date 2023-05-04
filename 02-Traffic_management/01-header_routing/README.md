@@ -444,3 +444,13 @@ gateway.networking.istio.io "helloworld-gateway" deleted
 service "helloworld" deleted
 virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
+
+
+
+# Links of interest
+
+- https://istio.io/latest/docs/reference/config/networking/virtual-service/
+
+- https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPMatchRequest
+
+- https://istio.io/latest/docs/reference/config/networking/destination-rule/#
