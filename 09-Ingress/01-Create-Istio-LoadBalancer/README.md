@@ -6,7 +6,7 @@ include_toc: true
 
 # Based on
 
-- [01-hello_world_1_service_1_deployment](../../01-Getting%20Started/01-hello_world_1_service_1_deployment)
+- [01-hello_world_1_service_1_deployment](../../01-Getting_Started/01-hello_world_1_service_1_deployment)
 
 # Description
 
@@ -108,7 +108,7 @@ Thank you for installing Istio 1.17.  Please take a few minutes to tell us about
 ### Deploy gateway
 
 ```shell
-kubectl apply -f gateway.yaml
+kubectl apply -f Gateway.yaml
 ```
 ```text
  
@@ -162,7 +162,7 @@ x-envoy-upstream-service-time: 15
 
 ```shell
 kubectl delete -f ./deployment-nomtls.yaml
-kubectl delete -f ./gateway.yaml
+kubectl delete -f ./Gateway.yaml
 ```
 ```text
 service "helloworld" deleted
