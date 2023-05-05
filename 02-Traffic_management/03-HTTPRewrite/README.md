@@ -221,7 +221,7 @@ curl 192.168.1.50/helloworld -s | grep "<h1>.*</h1>"
 <center><h1>404 Not Found</h1></center>
 ```
 
-## Cleanup
+## Cleanup`
 
 Finally, a cleanup from the resources deployed.
 

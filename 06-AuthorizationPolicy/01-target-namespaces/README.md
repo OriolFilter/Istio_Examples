@@ -5,7 +5,7 @@ include_toc: true
 
 # Continues from
 
-- [06-mTLS](../../02-Traffic_management/06-mTLS)
+- [06-mTLS](../../10-mTLS_PeerAuthentication/06-mTLS)
 
 ## Description
 

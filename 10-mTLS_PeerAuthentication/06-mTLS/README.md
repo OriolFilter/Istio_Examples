@@ -5,7 +5,7 @@ include_toc: true
 
 # Based on
 
-- [01-hello_world_1_service_1_deployment](../../01-Getting%20Started/01-hello_world_1_service_1_deployment)
+- [01-hello_world_1_service_1_deployment](../../01-Getting_Started/01-hello_world_1_service_1_deployment)
 
 ## Description
 
@@ -68,7 +68,7 @@ istioctl dashboard kiali
 
 ## Display services menu
 
-![Kiali menu, displaying 3 services. helloworld, byeworld and kubernetes](../src/06-kiali-services.png)
+![Kiali menu, displaying 3 services. helloworld, byeworld and kubernetes](src/06-kiali-services.png)
 
 > **Highlight:**\
 > On the column located at the right, we can notice a note saying `Missing Sidecar`
@@ -81,13 +81,13 @@ istioctl dashboard kiali
 
 On the service `byeworld` (reminder that it's pods had the Istio sidecar injection disabled), it displays the message `No mTLS`, meaning that mTLS (Mutual TLS between Istio sidecards) is not available.
 
-![byeworld displays the message `No mTLS`](../src/06-kiali-services-byeworld.png)
+![byeworld displays the message `No mTLS`](src/06-kiali-services-byeworld.png)
 
 ### Helloworld
 
 On the service `helloworld`, it displays the message `mTLS`
 
-![helloworld displays the message `mTLS`](../src/06-kiali-services-helloworld.png)
+![helloworld displays the message `mTLS`](src/06-kiali-services-helloworld.png)
 
 ## Test resources
 ### Curl / LB requests / requests from external traffic
