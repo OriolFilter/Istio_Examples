@@ -5,7 +5,7 @@ include_toc: true
 
 # Based on
 
-- [08a-HTTPS-min-TLS-version](../08a-HTTPS-min-TLS-version)
+- [08a-HTTPS-min-TLS-version](../../03-Gateway_Ingress/08a-HTTPS-min-TLS-version)
 
 # Description
 
@@ -197,7 +197,7 @@ spec:
 ```
 
 > **Note**:\
-> As this configuration is very board, and targets the whole namespace, I would strongly recommend referring to the following example [06-Internal-Authentication/02-target-service-accounts](../../06-AuthorizationPolicy/02-target-service-accounts), which shows how to target service accounts set to resources, limiting the scope of this rule set.
+> As this configuration is very board, and targets the whole namespace, I would strongly recommend referring to the following example [06-Internal-Authentication/02-target-service-accounts](../../08-AuthorizationPolicy/02-target-service-accounts), which shows how to target service accounts set to resources, limiting the scope of this rule set.
 
 # Walkthrough
 
