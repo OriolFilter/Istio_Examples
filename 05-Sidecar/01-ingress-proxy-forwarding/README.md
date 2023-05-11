@@ -264,7 +264,7 @@ sidecar.networking.istio.io "helloworld-sidecar" deleted
 
 ### Curl again
 
-After deleting the `sidecar` configuration, which was handling the ingress traffic from port `8080`, we can observe that we are no longer able to handle the incoming requests, raising an error message. 
+After deleting the `sidecar` configuration, which was handling the ingress traffic from port `8080`, we can observe that we are no longer able to handle the incoming requests, raising an error message.
 
 ```shell
 curl 192.168.1.50/helloworld -s
