@@ -10,7 +10,7 @@ On this example compares the behavior between setting up the MeshConfig `Outboun
 
 - REGISTRY_ONLY: Restricted to services that figure in the service registry a and the ServiceEntry objects.
 
-More info regarding this configuration at the pertintent documentation (https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/#MeshConfig-OutboundTrafficPolicy-Mode)
+More info regarding this configuration at the pertinent documentation (https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/#MeshConfig-OutboundTrafficPolicy-Mode)
 
 ## Runthrough
 
@@ -70,7 +70,7 @@ server: istio-envoy
 
 ### Test egress the helloworld deployment
 
-It returns a 301 code, meaning that it was able to reach the destination and it was attempted to redirect the traffic from HTTP to HTTPS.
+It returns a 301 code, meaning that it was able to reach the destination, and it was attempted to redirect the traffic from HTTP to HTTPS.
 
 ```shell
 $ kubectl exec -i -t "$(kubectl get pod -l app=helloworld | tail -n 1 | awk '{print $1}')" -- curl wikipedia.com -I
