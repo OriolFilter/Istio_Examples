@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld
+  labels:
+    app: helloworld
+  namespace: foo
+spec:
+  ports:
+    - port: 8080
+      name: http-a
+      targetPort: 80
+
+    - port: 80
+      name: http-b
+      targetPort: 80
+
+  selector:
+    app: helloworld
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld
+  labels:
+    app: helloworld
+  namespace: default
+spec:
+  ports:
+    - port: 8080
+      name: http-a
+      targetPort: 80
+
+    - port: 80
+      name: http-b
+      targetPort: 80
+
+  selector:
+    app: helloworld

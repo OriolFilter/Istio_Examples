@@ -342,7 +342,7 @@ virtualservice.networking.istio.io/helloworld-vs created
 
 ## Wait for the pods to be ready
 
-Wait for the Apache and Nginx deployments to be up and ready.
+Wait for the Apache, Nginx and Whoami deployments to be up and ready.
 
 ```shell
 watch -n 2 kubectl get deployment helloworld-v{0..2} 

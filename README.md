@@ -114,3 +114,4 @@ https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selec
 
 - https://istiobyexample.dev/
 
+- https://www.istioworkshop.io/

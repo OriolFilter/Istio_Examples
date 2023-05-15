@@ -111,7 +111,7 @@ The configuration set, targets the [gateway created](#gateway) as well of not li
 
 We configure 2 rules for HTTP traffic (this includes `HTTPS` and `HTTP2`, this will be my last warning about this).
 
-The first rule configure will match when the requested path is `/helloworld`.
+The first rule configured will match when the requested path is `/helloworld`.
 
 This traffic will be forwarded to the service `helloworld.default.svc.cluster.local` with port `80`.
 
@@ -176,9 +176,8 @@ Wait for the Apache and Nginx deployments to be up and ready.
 kubectl get deployment helloworld-nginx -w
 ```
 ```text 
-NAME            READY   UP-TO-DATE   AVAILABLE   AGE
-helloworld-v1   1/1     1            1           4m1s
-helloworld-v2   1/1     1            1           4m1s
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+helloworld-nginx   1/1     1            1           9s
 ```
 
 ## Test the service
