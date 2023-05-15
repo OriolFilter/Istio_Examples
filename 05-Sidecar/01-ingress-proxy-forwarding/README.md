@@ -24,8 +24,6 @@ This example configures:
 
 # Configuration
 
-`etc -> "POD" -> sidecar -> service container`
-
 ## Service
 
 Creates a service named `helloworld`.
