@@ -734,5 +734,5 @@ sidecar.networking.istio.io "helloworld-sidecar-foo" deleted
 - https://istio.io/latest/blog/2019/monitoring-external-service-traffic/#what-are-blackhole-and-passthrough-clusters
 
 - https://istio.io/v1.0/help/ops/traffic-management/proxy-cmd/#deep-dive-into-envoy-configuration
-- 
+
 - https://istio.io/latest/docs/reference/commands/pilot-discovery/#pilot-discovery-completion

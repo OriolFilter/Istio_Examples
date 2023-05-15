@@ -1,15 +1,3 @@
-#apiVersion: networking.istio.io/v1alpha3
-#kind: Sidecar
-#metadata:
-#  name: global-sidecar
-#  namespace: istio-system
-#spec:
-#  egress:
-#    - hosts:
-#      - "./*"
-#  outboundTrafficPolicy:
-#    mode: REGISTRY_ONLY
----
 apiVersion: networking.istio.io/v1alpha3
 kind: Sidecar
 metadata:
@@ -25,8 +13,6 @@ spec:
         protocol: HTTP
         name: egress-http
       hosts:
-#        - "./*"
-#        - "istio-system/*"
         - "foo/*"
   outboundTrafficPolicy:
     mode: REGISTRY_ONLY
@@ -47,16 +33,6 @@ spec:
         name: egress-default
       hosts:
         - "default/*"
-#    - port:
-#        number: 80
-#        protocol: HTTP
-#        name: egress-foo
-#      hosts:
         - "./*"
-#- "./*"
-  #        - "default/helloworld.default.svc.cluster.local"
-  #        - "*/*"
-  #        - "default/helloworld.default.svc.cluster.local"
-  #        - "foo/*"
   outboundTrafficPolicy:
     mode: REGISTRY_ONLY
