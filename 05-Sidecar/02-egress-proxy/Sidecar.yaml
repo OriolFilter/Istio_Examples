@@ -1,0 +1,62 @@
+#apiVersion: networking.istio.io/v1alpha3
+#kind: Sidecar
+#metadata:
+#  name: global-sidecar
+#  namespace: istio-system
+#spec:
+#  egress:
+#    - hosts:
+#      - "./*"
+#  outboundTrafficPolicy:
+#    mode: REGISTRY_ONLY
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: helloworld-sidecar-default
+  namespace: default
+spec:
+  workloadSelector:
+    labels:
+      app: helloworld
+  egress:
+    - port:
+        number: 80
+        protocol: HTTP
+        name: egress-http
+      hosts:
+#        - "./*"
+#        - "istio-system/*"
+        - "foo/*"
+  outboundTrafficPolicy:
+    mode: REGISTRY_ONLY
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: helloworld-sidecar-foo
+  namespace: foo
+spec:
+  workloadSelector:
+    labels:
+      app: helloworld
+  egress:
+    - port:
+        number: 8080
+        protocol: HTTP
+        name: egress-default
+      hosts:
+        - "default/*"
+#    - port:
+#        number: 80
+#        protocol: HTTP
+#        name: egress-foo
+#      hosts:
+        - "./*"
+#- "./*"
+  #        - "default/helloworld.default.svc.cluster.local"
+  #        - "*/*"
+  #        - "default/helloworld.default.svc.cluster.local"
+  #        - "foo/*"
+  outboundTrafficPolicy:
+    mode: REGISTRY_ONLY

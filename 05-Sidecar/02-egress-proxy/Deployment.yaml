@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-default
+  labels:
+    app: helloworld
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+        - name: helloworld
+          image: nginx
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-foo
+  labels:
+    app: helloworld
+  namespace: foo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+        - name: helloworld
+          image: nginx
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 80
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: helloworld-test
+#  labels:
+#    app: helloworld
+#  namespace: test
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: helloworld
+#  template:
+#    metadata:
+#      labels:
+#        app: helloworld
+#    spec:
+#      containers:
+#        - name: helloworld
+#          image: nginx
+#          resources:
+#            requests:
+#              cpu: "100m"
+#          imagePullPolicy: IfNotPresent #Always
+#          ports:
+#            - containerPort: 80
