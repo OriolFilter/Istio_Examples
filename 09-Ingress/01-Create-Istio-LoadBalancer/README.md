@@ -115,11 +115,6 @@ spec:
           # Set a unique label for the gateway. This is required to ensure Gateways
           # can select this workload
           istio: myingressgateway
-  values:
-    gateways:
-      istio-ingressgateway:
-        # Enable gateway injection
-        injectionTemplate: gateway
 ```
 
 ## Gateway
