@@ -59,11 +59,9 @@ https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selec
 │   └── 04-hello_world_1_service_2_deployments_managed_version_foo_namespace
 ├── 02-Traffic_management
 │   ├── 01-header_routing
-│   │   └── src
 │   ├── 02-DirectResponse-HTTP-Body
 │   ├── 03-HTTPRewrite
 │   └── 04-HTTPRedirect
-│       └── src
 ├── 03-Gateway_Ingress
 │   ├── 01-Host_Based_Routing
 │   ├── 02-Restrict_Namespaces
@@ -85,21 +83,17 @@ https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selec
 │   └── 03-target-deployments
 ├── 09-Ingress
 │   └── 01-Create-Istio-LoadBalancer
-│       └── IstioOperator
 ├── 10-mTLS_PeerAuthentication
 │   ├── 01-disable-mTLS
 │   ├── 02-portLevelMtls
 │   └── 06-mTLS
-│       └── src
 ├── 11-Fault_Injection
 │   ├── 05a-FaultInjection-delay
 │   └── 05b-FaultInjection-abort
 ├── 12-CircuitBreaking
 ├── 90-MixConfigs
 │   ├── 01-HTTPS-Gateway_Service_Entry
-│   │   └── src
 │   └── Minecraft
-│       └── Istio-Ingress
 └── 99-resources
     └── HTTPS-NGINX-DOCKERFILE
 ```
