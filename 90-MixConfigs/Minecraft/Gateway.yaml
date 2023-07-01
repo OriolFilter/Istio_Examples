@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: minecraft-gateway
+  namespace: default
+spec:
+  selector:
+    istio: games
+  servers:
+    - port:
+        number: 25565
+        name: tcp-1
+        protocol: TCP
+      hosts:
+        - "*"

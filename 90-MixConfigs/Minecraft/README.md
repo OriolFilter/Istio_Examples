@@ -1,0 +1,1 @@
+https://github.com/itzg/docker-minecraft-server/#server-configuration

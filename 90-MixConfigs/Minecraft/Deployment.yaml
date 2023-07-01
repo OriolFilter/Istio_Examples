@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft-1
+  namespace: default
+  labels:
+    app: minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 25565
+          envFrom:
+            - configMapRef:
+                name: minecraft-config
+          env:
+            - name: MOTD
+              value: "World 1 Server"
