@@ -8,7 +8,7 @@ The page used as a destination is my own [GitHub page](https://github.com/).
 
 # Based on
 
-- [05-hello_world_1_Service_Entry](../../04-Backends/05-Service_Entry)
+- [05-hello_world_1_Service_Entry](../../04-Backends/01-Service_Entry)
 
 # Configuration
 
@@ -24,10 +24,10 @@ Bear in mind that when Istio is communicating with resources externals to the me
 
 Also, policy enforcement is performed in the client side instead of the server side.
 
-> **Note:**/
+> **Note:**\
 > For more information regarding the `resolution` field or the `location` field, refer to the following official Istio documentations:
-> [ServiceEntry.Location](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Location)
-> [ServiceEntry.Resolution](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Resolution)
+> - [ServiceEntry.Location](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Location)
+> - [ServiceEntry.Resolution](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Resolution)
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -75,7 +75,7 @@ The path `/external` will forward the request towards the destination URL `githu
 
 Highlight that the destination is `github.com`, which is the same as the contents set on the field `host` from the [ServiceEntry resource configured above](#serviceentry).
 
-As seen [in the previous example, where the host that didn't have the `HOST` header wasn't able to receive a response by the destination](../../04-Backends/05-Service_Entry/#external-noh), we configured the `HOST` header to match the URL from the external service.
+As seen [in the previous example, where the host that didn't have the `HOST` header wasn't able to receive a response by the destination](../../04-Backends/01-Service_Entry/#external-noh), we configured the `HOST` header to match the URL from the external service.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -108,7 +108,7 @@ spec:
 
 ## DestinationRule
 
-As seen in the example [02-Traffic_management/09-HTTPS-backend](../../04-Backends/09-HTTPS-backend), where we configure Istio to use an `HTTPS` backend, the same configuration is applied on this case (yes, I am aware that a `ServiceEntry` is also a backend).
+As seen in the example [02-Traffic_management/09-HTTPS-backend](../../04-Backends/02-HTTPS-backend), where we configure Istio to use an `HTTPS` backend, the same configuration is applied on this case (yes, I am aware that a `ServiceEntry` is also a backend).
 
 For such, we deploy a `DestinationRule` setting to expect to terminate the TLS traffic, for the traffic with resource destination `github.com`, and port `8443`, which matches the settings set in our [ServiceEntry](#serviceentry) deployed.
 

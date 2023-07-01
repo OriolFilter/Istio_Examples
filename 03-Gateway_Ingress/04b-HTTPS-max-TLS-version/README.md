@@ -5,19 +5,17 @@ include_toc: true
 
 # Based on
 
-- [01-hello_world_1_service_1_deployment](../../01-Getting%20Started/01-hello_world_1_service_1_deployment)
+- [08a-HTTPS-min-TLS-version](../04a-HTTPS-min-TLS-version)
 
 # Description
 
-On this example, we generate a TLS configuration, and afterwards we attach such to a `Gateway` resource listening to the port `443` for `HTTPS` traffic.
+The previous example was modified to limit and specify the maximum TLS version. 
 
-> **Note:** \
-> This was based on the information from the following Istio documentation:
-> - [Secure Gateways](https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/)
-
-# Configuration applied
+# Changelog
 
 ## Gateway
+
+Gateway has been modified to limit the maximum TLS version to v1.2.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -37,19 +35,9 @@ spec:
       tls:
         mode: SIMPLE
         credentialName: my-tls-cert-secret
+        maxProtocolVersion: TLSV1_2
 ```
 
-- Gateway is listening to the port `443` and `HTTPS` protocol.
-
-- Allows for all hosts.
-
-- The TLS configuration is set to simple, and the credentials (the object that contains the certificates/TLS configuration) is set to `my-tls-cert-secret`.
-
-> **Note:**\
-> The credentials resource is created further bellow through the [Walkthrough](#walkthrough) steps.
-
-> **Note:**\
-> For more information regarding the TLS mode configuration, refer to the following [Istio documentation regarding the TLS mode field](https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSmode).
 
 # Walkthrough
 
@@ -122,24 +110,38 @@ virtualservice.networking.istio.io/helloworld-vs created
 
 ## Test the service
 
-[//]: # (```shell)
-[//]: # (curl --insecure --resolve lb.net:443:192.168.1.50 https://lb.net/helloworld)
-[//]: # (```)
+### Curl TLS 1.2
+
+It fails as intended.
+
+As the TLS v1.2 is smaller than the TLS v1.3 set as a minimal TLS version accepted, it doesn't allow us to proceed with the request.
 
 ```shell
-curl  --insecure https://192.168.1.50/helloworld -I
+curl  --insecure https://192.168.1.50/helloworld -I --tlsv1.2 --tls-max 1.2
 ```
 
 ```text
 HTTP/2 200 
 server: istio-envoy
-date: Sun, 23 Apr 2023 05:06:47 GMT
+date: Sun, 23 Apr 2023 05:48:04 GMT
 content-type: text/html
 content-length: 615
 last-modified: Tue, 28 Mar 2023 15:01:54 GMT
 etag: "64230162-267"
 accept-ranges: bytes
-x-envoy-upstream-service-time: 96
+x-envoy-upstream-service-time: 7
+```
+
+### Curl TLS 1.3
+
+It works as intended due respecting the minimal TLS version set.
+
+```shell
+curl  --insecure https://192.168.1.50/helloworld -I --tlsv1.3 --tls-max 1.3
+```
+
+```text
+curl: (35) OpenSSL/3.0.8: error:0A00042E:SSL routines::tlsv1 alert protocol version
 ```
 
 ## Cleanup
@@ -147,7 +149,6 @@ x-envoy-upstream-service-time: 96
 ```shell
 kubectl delete -n istio-system secret my-tls-cert-secret
 ```
-
 ```text
 secret "my-tls-cert-secret" deleted
 ```
@@ -161,7 +162,6 @@ deployment.apps "helloworld-nginx" deleted
 gateway.networking.istio.io "helloworld-gateway" deleted
 virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
-
 ```shell
 rm -rv certfolder/
 ```
@@ -171,26 +171,8 @@ removed 'certfolder/istio.cert.crt'
 removed directory 'certfolder/'
 ```
 
-# Troubleshooting.
-
-## curl: (7) Failed to connect to 192.168.1.51 port 443 after 2 ms: Couldn't connect to server
-
-- Ensure that the gateway is listening to the right port, in this case, the port 443.
-
-- Refer to the troubleshooting documentation, specifically the `Logs>Ingress`. \
-Check if it displays any log activity that could facilitate the troubleshooting / investigation.
-
-## curl: (35) Recv failure: Connection reset by peer
-
-- Refer to the troubleshooting documentation, specifically the `Logs>Ingress`. \
-  Check if it displays any log activity that could facilitate the troubleshooting / investigation.
-
-## 404
-
-Ensure the URL used to thest the connectivity, matches the host and path rules applied, both in the `Gateway` and `VirtualService` resources.
-
 # Links of Interest
 
-- https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress
+- https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSProtocol
 
-- https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSmode
+- https://discuss.istio.io/t/minimum-tls-version/5541/3

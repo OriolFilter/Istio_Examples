@@ -288,21 +288,21 @@ foo              helloworld-foo            1/1     1            1           10s
 
 Reminder of the **egress** criteria that has been configured to be met:
 
-[ ] Port `80`.
+- [ ] Port `80`.
 
-[ ] `HTTP` protocol.
+- [ ] `HTTP` protocol.
 
-[ ] Namespace destination `foo`.
+- [ ] Namespace destination `foo`.
 
 #### Curl helloworld.foo.svc.cluster.local:80
 
 On this scenario we meet the following criteria:
 
-[x] Port `80`.
+- [x] Port `80`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[x] Namespace destination `foo`.
+- [x] Namespace destination `foo`.
 
 ```shell
 NAMESPACE="default" && kubectl exec -n ${NAMESPACE} "$(kubectl get pod -n ${NAMESPACE} -l app=helloworld -o jsonpath={.items..metadata.name})" -- curl helloworld.foo.svc.cluster.local:80 -sI
@@ -326,11 +326,11 @@ x-envoy-upstream-service-time: 10
 
 #### Curl helloworld.foo.svc.cluster.local:8080
 
-[ ] Port `80`.
+- [ ] Port `80`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[x] Namespace destination `foo`.
+- [x] Namespace destination `foo`.
 
 
 ```shell
@@ -375,11 +375,11 @@ For such, instead the is sent towards `BlackHoleCluster`.
 
 #### Curl helloworld.default.svc.cluster.local:80
 
-[x] Port `80`.
+- [x] Port `80`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[ ] Namespace destination `foo`.
+- [ ] Namespace destination `foo`.
 
 
 ```shell
@@ -432,11 +432,11 @@ For such it raises a `direct response` with status code `502`, as the `istio-pro
 
 #### Curl helloworld.default.svc.cluster.local:8080
 
-[x] Port `8080`.
+- [x] Port `8080`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[ ] Namespace destination `foo`.
+- [ ] Namespace destination `foo`.
 
 
 ```shell
@@ -479,11 +479,11 @@ We can see, how the `istio-proxy` container, from the `helloworld` POD, in the n
 
 Reminder of the **egress** criteria that has been configured to be met:
 
-[ ] Port `8080`.
+- [ ] Port `8080`.
 
-[ ] `HTTP` protocol.
+- [ ] `HTTP` protocol.
 
-[ ] Namespace destination `foo` or `default`.
+- [ ] Namespace destination `foo` or `default`.
 
 
 
@@ -492,11 +492,11 @@ Reminder of the **egress** criteria that has been configured to be met:
 
 On this scenario we meet the following criteria:
 
-[ ] Port `8080`.
+- [ ] Port `8080`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[x] Namespace destination `foo` or `default`.
+- [x] Namespace destination `foo` or `default`.
 
 ```shell
 NAMESPACE="foo" && kubectl exec -n ${NAMESPACE} "$(kubectl get pod -n ${NAMESPACE} -l app=helloworld -o jsonpath={.items..metadata.name})" -- curl helloworld.foo.svc.cluster.local:80 -sI
@@ -538,11 +538,11 @@ We can see, how the `istio-proxy` container, from the `helloworld` POD, in the n
 
 On this scenario we meet the following criteria:
 
-[x] Port `8080`.
+- [x] Port `8080`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[x] Namespace destination `foo` or `default`.
+- [x] Namespace destination `foo` or `default`.
 
 ```shell
 NAMESPACE="foo" && kubectl exec -n ${NAMESPACE} "$(kubectl get pod -n ${NAMESPACE} -l app=helloworld -o jsonpath={.items..metadata.name})" -- curl helloworld.foo.svc.cluster.local:8080 -sI
@@ -568,11 +568,11 @@ x-envoy-upstream-service-time: 77
 
 On this scenario we meet the following criteria:
 
-[ ] Port `8080`.
+- [ ] Port `8080`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[x] Namespace destination `foo` or `default`.
+- [x] Namespace destination `foo` or `default`.
 
 ```shell
 NAMESPACE="foo" && kubectl exec -n ${NAMESPACE} "$(kubectl get pod -n ${NAMESPACE} -l app=helloworld -o jsonpath={.items..metadata.name})" -- curl helloworld.default.svc.cluster.local:80 -sI
@@ -612,11 +612,11 @@ We can see, how the `istio-proxy` container, from the `helloworld` POD, in the n
 
 On this scenario we meet the following criteria:
 
-[x] Port `8080`.
+- [x] Port `8080`.
 
-[x] `HTTP` protocol.
+- [x] `HTTP` protocol.
 
-[x] Namespace destination `foo` or `default`.
+- [x] Namespace destination `foo` or `default`.
 
 ```shell
 NAMESPACE="foo" && kubectl exec -n ${NAMESPACE} "$(kubectl get pod -n ${NAMESPACE} -l app=helloworld -o jsonpath={.items..metadata.name})" -- curl helloworld.default.svc.cluster.local:8080 -sI

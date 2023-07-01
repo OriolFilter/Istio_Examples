@@ -219,7 +219,7 @@ I would like to put emphasis on the following line returned:
 server: istio-envoy
 ```
 
-This means that the contents returned was performed by the Istio service, instead of the Nginx or any other possible backend service.
+This means that the contents returned was performed by the Istio service, therefore, the request was able to reach Istio and received a response from it.
 
 ## Cleanup
 

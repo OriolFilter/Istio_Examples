@@ -1,0 +1,27 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: ingress
+spec:
+  profile: empty # Do not install CRDs or the control plane
+  components:
+    ingressGateways:
+      - name: ingress-games-gateway
+        namespace: istio-system
+        enabled: true
+        label:
+          # Set a unique label for the gateway. This is required to ensure Gateways
+          # can select this workload
+          istio: games
+        k8s:
+          service:
+            ports:
+              - port: 25565
+                targetPort: 25565
+                name: minecraft-port
+                protocol: TCP
+  values:
+    gateways:
+      istio-ingressgateway:
+        # Enable gateway injection
+        injectionTemplate: gateway

@@ -143,7 +143,7 @@ virtualservice.networking.istio.io/helloworld-vs created
 ### Get LB IP
 
 ```shell
-$ kubectl get svc -l istio=ingressgateway -A
+kubectl get svc -l istio=ingressgateway -A
 ```
 ```text
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
@@ -177,14 +177,15 @@ curl 192.168.1.50/external
 
 We don't receive any output.
 
-This could be due, even if we resolve the destination IP for the URL `info.cern.ch`, the destination might have a Reverse Proxy or any other ingress resource that could condition handling this request.
+Even if we resolve the destination IP for the URL `info.cern.ch`, the destination might have a **Reverse Proxy** or any other ingress resource that could condition handling this request.
 
-Due to the `HOST` field not being modified after we set the request, it might not be able to pass the filtering set, weather it is security wise, for example, requiring such field to allow the request; or it being a routing condition, which due not having this field specified, it's not able to route the request towards the destination desired.
+Due to the `HOST` field not being modified after we set the request, it might not be able to pass the filtering rules set on the destination server, on this scenario being the service responsible for receiving requests with the URL `info.cern.ch`.
 
 ```shell
 curl 192.168.1.50/external-noh
 ```
 ```text
+</pre></body></html>
 ```
 
 ## Cleanup
