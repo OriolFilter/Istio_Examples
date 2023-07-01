@@ -216,13 +216,10 @@ helloworld-nginx   1/1     1            1           16s
 
 ## Install the Istio Ingress Gateway Load Balancer
 
-Press `y` to install.
-
 ```shell
-istioctl install -f IstioOperator/IstioOperator.yaml
+istioctl install -f IstioOperator/IstioOperator.yaml -y
 ```
 ```text
-This will install the Istio 1.17.2 empty profile into the cluster. Proceed? (y/N) y
 ✔ Ingress gateways installed                                                                                                                                                                                                          
 ✔ Installation complete                                                                                                                                                                                                               
 Thank you for installing Istio 1.17.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/hMHGiwZHPU7UQRWe9
@@ -298,3 +295,8 @@ gateway.networking.istio.io "helloworld-gateway" deleted
 service "helloworld" deleted
 virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
+
+
+# Links of interest
+
+- https://istio.io/latest/docs/reference/config/istio.operator.v1alpha1
