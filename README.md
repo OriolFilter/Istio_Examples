@@ -4,7 +4,7 @@ I have absolutely used as a reference and/or template other parties configuratio
 
 I have tried to reference as much as possible as long it's relevant/useful for the reader.
 
-Refer to the specific `README.md` in each example for more information, as the documentation is still in progress.
+Refer to the specific `README.md` in each example for more information, as (**my**) documentation is still in progress.
 
 Currently, the resources are under a relocation and the folders might contain things that don't _really match the topic_.  
 
