@@ -19,13 +19,13 @@ spec:
             port:
               number: 80
             subset: v1
-          weight: 20
+          weight: 80
         - destination:
             #            host: helloworld (OLD)
             host: helloworld.default.svc.cluster.local
             port:
               number: 80
             subset: v2
-          weight: 80
+          weight: 20
       rewrite:
         uri: "/"

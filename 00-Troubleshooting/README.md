@@ -3,6 +3,63 @@ gitea: none
 include_toc: true
 ---
 
+
+# Logs
+
+> **Note:**\
+> Remember that you can use the command `watch` or `watch -n 5` (where 5 refers every 5 seconds) in case of being interested on execute this commands periodically.
+
+## Istiod
+
+```shell
+kubectl logs -n istio-system -f deployments/istiod
+```
+
+## Istio-Proxy Pod
+
+This will display the logs from a deployment while targeting the `istio-proxy` container from the targeted pod/deployment.
+
+As well will attach the session to stream new logs. (`-f` `--follow`)
+
+```shell
+kubectl logs deployments/helloworld-default -f -c istio-proxy
+```
+
+```text
+[2023-05-15T00:42:03.699Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.111.90.232:8080 172.17.121.65:52006 - -
+[2023-05-15T00:42:24.785Z] "HEAD / HTTP/1.1" 200 - via_upstream - "-" 0 0 2 1 "-" "curl/7.74.0" "c133cbf0-b57d-4fba-8f84-d683ab903399" "helloworld.default.svc.cluster.local" "172.17.121.65:80" inbound|80|| 127.0.0.6:51695 172.17.121.65:80 172.17.121.65:43786 outbound_.80_._.helloworld.default.svc.cluster.local default
+[2023-05-15T00:42:24.784Z] "HEAD / HTTP/1.1" 200 - via_upstream - "-" 0 0 5 4 "-" "curl/7.74.0" "c133cbf0-b57d-4fba-8f84-d683ab903399" "helloworld.default.svc.cluster.local" "172.17.121.65:80" outbound|80||helloworld.default.svc.cluster.local 172.17.121.65:43786 10.111.90.232:80 172.17.121.65:57030 - default
+[2023-05-15T00:43:23.209Z] "HEAD / HTTP/1.1" 200 - via_upstream - "-" 0 0 6 5 "-" "curl/7.74.0" "e1f0a2f3-93ff-4c41-8cb3-6d3a53fce065" "helloworld.foo.svc.cluster.local" "172.17.247.42:80" outbound|80||helloworld.foo.svc.cluster.local 172.17.121.65:55040 10.109.248.148:80 172.17.121.65:60520 - default
+[2023-05-15T00:43:29.751Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.109.248.148:8080 172.17.121.65:40370 - -
+[2023-05-15T00:43:31.979Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.109.248.148:8080 172.17.121.65:40402 - -
+```
+
+## Ingress
+
+The service targeted, `istio-ingressgateway`, is an Ingress Load Balancer service from Istio.
+
+```shell
+kubectl logs -n istio-system services/istio-ingressgateway
+```
+#### Invalid TLS context has neither subject CN nor SAN names
+
+The TLS certificate specified don't have the field CN or the field SAN.
+
+To address this issue, issue a new certificate that has at least one of those fields.
+
+#### initial fetch timed out for type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secretthread
+
+This is due not being able to retrieve the TLS configuration assigned to the gateway.
+
+It's Important that the secret is located in the same namespace as the Istio Load Balancer used. In my case is the `istio-system`, but it will vary based on the environment.
+
+
+
+
+
+
+
+
 # Istioctl analyze
 
 `istioctl analyze` reviews the current configuration set.
@@ -67,57 +124,24 @@ listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 ...
 ```
 
-# Logs
-
-> **Note:**\
-> Remember that you can use the command `watch` or `watch -n 5` (where 5 refers every 5 seconds) in case of being interested on execute this commands periodically.
-
-## Istiod
+# Istioctl proxy-status
+> **Note:** Shorthand is `ps`
 
 ```shell
-kubectl logs -n istio-system -f deployments/istiod
+istioctl ps
 ```
-
-## Istio-Proxy Pod
-
-This will display the logs from a deployment while targeting the `istio-proxy` container from the targeted pod/deployment.
-
-As well will attach the session to stream new logs. (`-f` `--follow`)
-
-```shell
-kubectl logs deployments/helloworld-default -f -c istio-proxy
-```
-
 ```text
-[2023-05-15T00:42:03.699Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.111.90.232:8080 172.17.121.65:52006 - -
-[2023-05-15T00:42:24.785Z] "HEAD / HTTP/1.1" 200 - via_upstream - "-" 0 0 2 1 "-" "curl/7.74.0" "c133cbf0-b57d-4fba-8f84-d683ab903399" "helloworld.default.svc.cluster.local" "172.17.121.65:80" inbound|80|| 127.0.0.6:51695 172.17.121.65:80 172.17.121.65:43786 outbound_.80_._.helloworld.default.svc.cluster.local default
-[2023-05-15T00:42:24.784Z] "HEAD / HTTP/1.1" 200 - via_upstream - "-" 0 0 5 4 "-" "curl/7.74.0" "c133cbf0-b57d-4fba-8f84-d683ab903399" "helloworld.default.svc.cluster.local" "172.17.121.65:80" outbound|80||helloworld.default.svc.cluster.local 172.17.121.65:43786 10.111.90.232:80 172.17.121.65:57030 - default
-[2023-05-15T00:43:23.209Z] "HEAD / HTTP/1.1" 200 - via_upstream - "-" 0 0 6 5 "-" "curl/7.74.0" "e1f0a2f3-93ff-4c41-8cb3-6d3a53fce065" "helloworld.foo.svc.cluster.local" "172.17.247.42:80" outbound|80||helloworld.foo.svc.cluster.local 172.17.121.65:55040 10.109.248.148:80 172.17.121.65:60520 - default
-[2023-05-15T00:43:29.751Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.109.248.148:8080 172.17.121.65:40370 - -
-[2023-05-15T00:43:31.979Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.109.248.148:8080 172.17.121.65:40402 - -
+NAME                                                  CLUSTER        CDS        LDS        EDS        RDS          ECDS         ISTIOD                    VERSION
+helloworld-6798765f88-ql26n.default                   Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED       NOT SENT     istiod-dbf5ff64-9kxxs     1.17.2
+helloworld2-dc9cb5db6-m47x7.default                   Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED       NOT SENT     istiod-dbf5ff64-9kxxs     1.17.2
+istio-egressgateway-676bf68b54-d28fn.istio-system     Kubernetes     SYNCED     SYNCED     SYNCED     NOT SENT     NOT SENT     istiod-dbf5ff64-9kxxs     1.17.2
+istio-ingressgateway-8d56c999d-nv7ph.istio-system     Kubernetes     SYNCED     SYNCED     SYNCED     SYNCED       NOT SENT     istiod-dbf5ff64-9kxxs     1.17.2
 ```
 
-
-## Ingress
-
-The service targeted, `istio-ingressgateway`, is an Ingress Load Balancer service from Istio.
-
-```shell
-kubectl logs -n istio-system services/istio-ingressgateway
-```
-#### Invalid TLS context has neither subject CN nor SAN names
-
-The TLS certificate specified don't have the field CN or the field SAN.
-
-To address this issue, issue a new certificate that has at least one of those fields.
-
-#### initial fetch timed out for type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secretthread 
-
-This is due not being able to retrieve the TLS configuration assigned to the gateway.
-
-It's Important that the secret is located in the same namespace as the Istio Load Balancer used. In my case is the `istio-system`, but it will vary based on the environment.
 
 # Istioctl proxy-config
+> **Note:** Shorthand is `pc`
+
 
 ## Check listeners
 
