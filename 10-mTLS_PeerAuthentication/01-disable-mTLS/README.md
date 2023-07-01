@@ -558,7 +558,7 @@ On this scenario, we met a fatal error, not allowing us to access the service, u
 
 From my understanding, not only from this interaction, but from investigating through Istio forums (yet I don't have the link handy, so take this words with some grains of salt), **the traffic cannot be double terminated**, for such if we have an `HTTPS` backend, we might require to disable `mTLS` in order to communicate with it. We also would need to set a [Destination Rule like we did further above](#destination-rule), to specify that the traffic must be terminated with the backend (`tls.mode: STRICT`).
 
-Yet this depends on which would be our architecture, due also being able to set up [TLS Passthrough](../../03-Gateway_Ingress/11-TLS-PASSTHROUGH), or use a [TCP Forwarding](../../03-Gateway_Ingress/10-TCP-FORWARDING).
+Yet this depends on which would be our architecture, due also being able to set up [TLS Passthrough](../../03-Gateway_Ingress/06-TLS-PASSTHROUGH), or use a [TCP Forwarding](../../03-Gateway_Ingress/05-TCP-FORWARDING).
 
 ```shell
 curl 192.168.1.50/https-mTLS

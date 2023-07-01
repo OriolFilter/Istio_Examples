@@ -5,7 +5,7 @@ include_toc: true
 
 # Based on
 
-- [08a-HTTPS-min-TLS-version](../../03-Gateway_Ingress/08a-HTTPS-min-TLS-version)
+- [08a-HTTPS-min-TLS-version](../../03-Gateway_Ingress/04a-HTTPS-min-TLS-version)
 
 # Description
 

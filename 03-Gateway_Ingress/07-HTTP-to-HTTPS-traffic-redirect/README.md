@@ -5,7 +5,7 @@ include_toc: true
 
 # Based on
 
-- [07-HTTPS-Gateway-Simple-TLS](../07-HTTPS-Gateway-Simple-TLS)
+- [07-HTTPS-Gateway-Simple-TLS](../03-HTTPS-Gateway-Simple-TLS)
 
 # Description
 

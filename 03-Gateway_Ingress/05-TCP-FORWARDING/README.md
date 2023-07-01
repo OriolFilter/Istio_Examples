@@ -5,13 +5,17 @@ include_toc: true
 
 # Based on
 
-- [10-TCP-FORWARDING](../10-TCP-FORWARDING)
+- [08a-HTTPS-min-TLS-version](../04a-HTTPS-min-TLS-version)
 
 # Description
 
-The previous example was modified set TLS Forwarding for the HTTPS, meaning that the TLS will be terminated by the backend containing a service capable of such.
+The previous example was modified to set TCP forwarding towards the backend (HTTP and HTTPS backend).
 
-This requires a deployment with a service HTTPS (as it will need to handle the TLS termination ...). 
+The backend contains an HTTPS service, which is used to demonstrate how the TCP forwarding is working as intended (aka doesn't disturb HTTP traffic). 
+
+The same backend also contains the same service but running as HTTP, and for such has also been set in the gateway to display both working as intended.
+
+Additionally, the backend used, has HTTP2 enable, which also will be used to confirm that it's working as intended.
 
 > **Note:**\
 > For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
@@ -20,65 +24,68 @@ This requires a deployment with a service HTTPS (as it will need to handle the T
 
 ## Gateway
 
-The gateway was configured to listen the port `443` for `HTTPS` traffic protocol.
-
-The tls was configured as `PASSTHROUGH`
+The gateway has been configured to listen both ports `80` and `443` through the TCP protocol, without any host specified. 
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: helloworld-gateway
-  namespace: default
 spec:
   selector:
     istio: ingressgateway
   servers:
     - port:
-        number: 443
-        name: https-web
-        protocol: HTTPS
+        number: 80
+        name: tcp-1
+        protocol: TCP
       hosts:
         - "*"
-      tls:
-        mode: PASSTHROUGH
+    - port:
+        number: 443
+        name: tcp-2
+        protocol: TCP
+      hosts:
+        - "*"
 ```
 
 ## Virtual service
 
-Virtual service expected to receive traffic with designation, the host `lb.net`.
+Virtual service have 2 rules that perform the same behavior, on different ports.
 
-The rule that contains, will receive traffic from the port `443`, with host destination `lb.net`.
-
-The destination of such is the service `helloworld.default.svc.cluster.local`, with port destination 8443.
+The rules will receive the traffic and forward it to the destination service and port. 
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: helloworld-vs
-  namespace: default
 spec:
   hosts:
-    - "lb.net"
+    - "*"
   gateways:
     - helloworld-gateway
-  tls:
+  tcp:
     - match:
-        - port: 443
-          sniHosts: ["lb.net"]
+        - port: 80
       route:
         - destination:
             host: helloworld.default.svc.cluster.local
+            port:
+              number: 8080
+    - match:
+        - port: 443
+      route:
+        - destination:
+            host:  helloworld.default.svc.cluster.local
             port:
               number: 8443
 ```
 
 ## Service
 
-The service will forward incoming TCP traffic from the port `8443`, towards the deployment port `443`.
+The service will forward incoming traffic from the service port `8443`, that will be forwarded towards the port `443` from the deployment.
 
-It's been specified the protocol expected to service, it being `HTTPS`.
 
 ```yaml
 apiVersion: v1
@@ -90,11 +97,11 @@ metadata:
     service: helloworld
 spec:
   ports:
-    - name: https
-      port: 8443
+    - port: 8443
+      name: https
       targetPort: 443
       protocol: TCP
-      appProtocol: HTTPS
+      appProtocol: https
   selector:
     app: helloworld
 ```
@@ -135,6 +142,12 @@ spec:
             - containerPort: 443
 ```
 
+## PeerAuthentication
+
+```yaml
+
+```
+
 # Walkthrough
 
 ## Deploy resources
@@ -161,44 +174,52 @@ NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)     
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
 
-### curl HTTPS
-
-Well, it just works.
-
-The `--resolve` flag it's used to "fake" the traffic to match the filters we specified in the `Virtual Service`, specifically the `host` and `hostSNI` fields.
+### curl HTTP
 
 ```shell
-curl --insecure --resolve lb.net:443:192.168.1.50 https://lb.net
+curl http://192.168.1.50  -s -o=/dev/null -w 'http_version: %{http_version}\nstatus_code: %{response_code}\n'
 ```
 ```text
-<h2>Howdy</h2>
+http_version: 1.1
+status_code: 426
 ```
 
-### curl HTTPS (HEAD)
+#### curl HTTPS
 
-Here we can spot the following sentence:
-
-- `server: nginx/1.23.4`
-
-This means that the TLS was handled by Nginx (verifying that the `TLS Passthrough` was performed correctly).
-
-If it had been managed by Istio, it would say:
-
-- `server: istio-envoy`
+This already confirms that `HTTP2` is working as intended.
 
 ```shell
-curl --insecure --resolve lb.net:443:192.168.1.50 https://lb.net --HEAD
+curl https://192.168.1.50  -ks -o=/dev/null -w 'http_version: %{http_version}\nstatus_code: %{response_code}\n' --http1.1
 ```
 ```text
-HTTP/2 200 
-server: nginx/1.23.4
-date: Tue, 25 Apr 2023 02:49:33 GMT
-content-type: text/html
-content-length: 15
-last-modified: Tue, 25 Apr 2023 00:47:17 GMT
-etag: "64472315-f"
-strict-transport-security: max-age=7200
-accept-ranges: bytes
+http_version: 2
+status_code: 200
+```
+
+#### Curl HTTP2
+
+The previous example already displayed that `HTTP2` is working as intended.
+
+This example is maintained due being explicitly to confirm the `HTTP2` feature. 
+
+```shell
+curl https://192.168.1.50 -w 'http_version: %{http_version}\nstatus_code: %{response_code}\n' --http2 -sk -o=/dev/null
+```
+```text
+http_version: 2
+status_code: 200
+```
+
+#### Curl HTTP1.1
+
+We can confirm that `HTTP1.1` also works over `TCP forwarding`. 
+
+```shell
+curl https://192.168.1.50 -w 'http_version: %{http_version}\nstatus_code: %{response_code}\n' --http1.1 -sk -o=/dev/null
+```
+```text
+http_version: 1.1
+status_code: 200
 ```
 
 ## Cleanup
@@ -217,5 +238,3 @@ virtualservice.networking.istio.io "helloworld-vs" deleted
 # Links of Interest
 
 - https://istio.io/latest/docs/reference/config/networking/gateway/#Gateway
-
-- https://istio.io/latest/docs/reference/config/networking/gateway/#ServerTLSSettings-TLSmode
