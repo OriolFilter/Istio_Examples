@@ -4,9 +4,7 @@ I have absolutely used as a reference and/or template other parties configuratio
 
 I have tried to reference as much as possible as long it's relevant/useful for the reader.
 
-Refer to the specific `README.md` in each example for more information, some documentation is still in progress.
-
-Currently, the resources are under a relocation and the folders might contain things that don't _really match the topic_.  
+Refer to the specific `README.md` in each example for more information.
 
 # Tree of folders
 
@@ -33,7 +31,8 @@ Currently, the resources are under a relocation and the folders might contain th
 │   └── 07-HTTP-to-HTTPS-traffic-redirect
 ├── 04-Backends
 │   ├── 01-Service_Entry
-│   ├── 02-HTTPS-backend
+│   ├── 02-Outboud-Traffic-Policy
+│   ├── 03-HTTPS-backend
 ├── 05-Sidecar
 │   ├── 01-ingress-proxy-forwarding
 │   └── 02-egress-proxy
@@ -52,8 +51,8 @@ Currently, the resources are under a relocation and the folders might contain th
 │   ├── 02-disable-mTLS
 │   └── 03-mTLS-per-port-settings
 ├── 11-Fault_Injection
-│   ├── 05a-FaultInjection-delay
-│   └── 05b-FaultInjection-abort
+│   ├── 01-FaultInjection-delay
+│   └── 02-FaultInjection-abort
 ├── 12-CircuitBreaking
 ├── 90-MixConfigs
 │   ├── 01-HTTPS-Gateway_Service_Entry
