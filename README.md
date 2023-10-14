@@ -34,7 +34,6 @@ Currently, the resources are under a relocation and the folders might contain th
 ├── 04-Backends
 │   ├── 01-Service_Entry
 │   ├── 02-HTTPS-backend
-│   └── 03-HTTPS-backend-with-MTLS
 ├── 05-Sidecar
 │   ├── 01-ingress-proxy-forwarding
 │   └── 02-egress-proxy
@@ -42,16 +41,16 @@ Currently, the resources are under a relocation and the folders might contain th
 │   ├── 01-Envoy-add-response-headers
 │   └── 02-envoy-logging
 ├── 08-AuthorizationPolicy
-│   ├── 01-target-namespaces
-│   ├── 02-target-service-accounts
-│   └── 03-target-deployments
+│   ├── 01-AuthorizationPolicy-Target-Namespaces
+│   ├── 02-AuthorizationPolicy-Target-Service-Accounts
+│   └── 03-AuthorizationPolicy-Target-Deployments
 ├── 09-Ingress
-│   └── 01-Create-Istio-LoadBalancer
+│   └── 01-Ingress-IstioOperator
 │       └── IstioOperator
 ├── 10-mTLS_PeerAuthentication
-│   ├── 01-disable-mTLS
-│   ├── 02-portLevelMtls
-│   └── 06-mTLS
+│   ├── 01-mTLS
+│   ├── 02-disable-mTLS
+│   └── 03-mTLS-per-port-settings
 ├── 11-Fault_Injection
 │   ├── 05a-FaultInjection-delay
 │   └── 05b-FaultInjection-abort
@@ -64,6 +63,13 @@ Currently, the resources are under a relocation and the folders might contain th
     └── HTTPS-NGINX-DOCKERFILE
 ```
 
+#### "Why is 07 missing"
+
+Previously there was a folder that got refactored.
+
+Eventually the spot will be filled back.
+
+Want to avoid renaming folders unless required as it could break link references within the documentation.
 
 # Glossary
 
