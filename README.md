@@ -4,7 +4,7 @@ I have absolutely used as a reference and/or template other parties configuratio
 
 I have tried to reference as much as possible as long it's relevant/useful for the reader.
 
-Refer to the specific `README.md` in each example for more information, as (**my**) documentation is still in progress.
+Refer to the specific `README.md` in each example for more information, some documentation is still in progress.
 
 Currently, the resources are under a relocation and the folders might contain things that don't _really match the topic_.  
 
@@ -12,9 +12,6 @@ Currently, the resources are under a relocation and the folders might contain th
 # Glossary
 
 https://istio.io/latest/docs/reference/glossary/
-
-
-
 
 ## Services port names
 
@@ -73,7 +70,8 @@ https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selec
 │   └── 07-HTTP-to-HTTPS-traffic-redirect
 ├── 04-Backends
 │   ├── 01-Service_Entry
-│   └── 02-HTTPS-backend
+│   ├── 02-HTTPS-backend
+│   └── 03-HTTPS-backend-with-MTLS
 ├── 05-Sidecar
 │   ├── 01-ingress-proxy-forwarding
 │   └── 02-egress-proxy
@@ -83,6 +81,7 @@ https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selec
 │   └── 03-target-deployments
 ├── 09-Ingress
 │   └── 01-Create-Istio-LoadBalancer
+│       └── IstioOperator
 ├── 10-mTLS_PeerAuthentication
 │   ├── 01-disable-mTLS
 │   ├── 02-portLevelMtls
@@ -94,6 +93,7 @@ https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selec
 ├── 90-MixConfigs
 │   ├── 01-HTTPS-Gateway_Service_Entry
 │   └── Minecraft
+│       └── Istio-Ingress
 └── 99-resources
     └── HTTPS-NGINX-DOCKERFILE
 ```
