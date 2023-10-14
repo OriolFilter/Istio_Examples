@@ -3,21 +3,19 @@ gitea: none
 include_toc: true
 ---
 
-# Continues from
 
-[//]: # (- [01-hello_world_1_service_1_deployment]&#40;../../01-simple/01-hello_world_1_service_1_deployment&#41;)
-- [01-target-namespaces](../01-target-namespaces)
+# Description
+
+On this example we will be deploying an `AuthorizationPolicy` object to control the traffic that the `envoy-proxy` will manage on deployment created.
+
+As well, we will configure the `AuthorizationPolicy` object will be applied to the deployments with the targeted `ServiceAccount`.
 
 > **Note:**\
 > On this example there is minimal changes to the configuration to involve targeting service accounts.
 
-## Description
+# Based on
 
-Bla bla bla
-
-Configuration targeting service accounts (among others)
-
-By default, when a pod is deployed, if a service account has not been specified, it will be given the service account `default` from that namespace. 
+- [01-AuthorizationPolicy-Target-Namespaces](../01-AuthorizationPolicy-Target-Namespaces)
 
 # Changelog
 

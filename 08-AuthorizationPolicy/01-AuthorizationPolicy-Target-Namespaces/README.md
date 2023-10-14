@@ -3,15 +3,16 @@ gitea: none
 include_toc: true
 ---
 
-# Continues from
 
-- [06-mTLS](../../10-mTLS_PeerAuthentication/06-mTLS)
+# Description
 
-## Description
+On this example we will be deploying an `AuthorizationPolicy` object to control the traffic that the `envoy-proxy` will manage on deployment created.
 
-Bla bla bla
+As well, we will configure the `AuthorizationPolicy` object to be applied at a "namespace" level.
 
-Configuration targeting namespaces
+# Based on
+
+- [10-mTLS_PeerAuthentication/01-mTLS](../../10-mTLS_PeerAuthentication/01-mTLS)
 
 # Configuration
 

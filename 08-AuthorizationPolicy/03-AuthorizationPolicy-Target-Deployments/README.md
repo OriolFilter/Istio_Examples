@@ -3,18 +3,27 @@ gitea: none
 include_toc: true
 ---
 
-# Continues from
 
-- [01-target-namespaces](../01-target-namespaces)
+# Description
+
+On this example we will be deploying an `AuthorizationPolicy` object to control the traffic that the `envoy-proxy` will manage on deployment created.
+
+As well, we will configure the `AuthorizationPolicy` object will be applied to the deployments with the targeted through the usage of labels to filter the resources affected.
 
 > **Note:**\
 > On this example there is minimal changes to the configuration to involve targeting the deployment resources through label filtering.
 
-## Description
+# Based on
 
-Bla bla bla
+- [01-AuthorizationPolicy-Target-Namespaces](../01-AuthorizationPolicy-Target-Namespaces)
 
-In this example we will be targeting the labels set to the deployments, while keeping part of the previous AuthorizationPolicy configuration to maintain its behavior.   
+[//]: # (## Description)
+
+[//]: # ()
+[//]: # (Bla bla bla)
+
+[//]: # ()
+[//]: # (In this example we will be targeting the labels set to the deployments, while keeping part of the previous AuthorizationPolicy configuration to maintain its behavior.   )
 
 [//]: # (For such, it's important to check the labels set in the Istio ingress that we will be using.)
 
