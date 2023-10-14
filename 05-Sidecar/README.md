@@ -1,6 +1,6 @@
 ## Description
 
-On these examples, a `Sidecar` will be configured.
+On these examples, the `Sidecar` object will be configured to select which services the `proxy-container` has access to.
 
 ## Examples
 
