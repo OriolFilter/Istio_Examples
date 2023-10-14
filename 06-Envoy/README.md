@@ -3,6 +3,10 @@
 
 This section focuses on configuring the object `EnvoyFilter`.
 
+## Examples
+ 
+- 01-Envoy-add-response-headers
+- 02-envoy-logging
 
 ## Heads up
 
