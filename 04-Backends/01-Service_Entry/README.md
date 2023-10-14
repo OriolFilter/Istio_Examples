@@ -24,9 +24,9 @@ Bear in mind that when Istio is communicating with resources externals to the me
 Also, policy enforcement is performed in the client side instead of the server side.
 
 > **Note:**/
-> For more information regarding the `resolution` field or the `location` field, refer to the following official Istio documentations:
-> [ServiceEntry.Location](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Location)
-> [ServiceEntry.Resolution](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Resolution)
+> For more information regarding the `resolution` field or the `location` field, refer to the following official Istio documentations:\
+> - [ServiceEntry.Location](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Location)\
+> - [ServiceEntry.Resolution](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry-Resolution)
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
