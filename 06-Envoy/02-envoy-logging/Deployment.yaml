@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-nginx
+  labels:
+    app: helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+      annotations:
+        sidecar.istio.io/componentLogLevel: lua:debug
+    spec:
+      containers:
+        - name: helloworld
+          image: nginx
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 80

@@ -5,27 +5,27 @@ include_toc: true
 
 # Description
 
-This example deploys the same infrastructure as the [previous example](../../01-Getting_Started/01-hello_world_1_service_1_deployment), and restricts the access to the gateway based on the domain host from the destination URL.
+Based on the [previous example](../../01-Getting_Started/01-hello_world_1_service_1_deployment), we configure a "fault" that will make the backend take 10 more seconds before receiving the request.
 
-The domain host targeted will be `my.domain`.
+This will be applied to a 90% of the incoming traffic that matches the rule and will allow to confirm in a secure environment how the application would behave in such difficult situations, and apply the modifications required to avoid issue in case there would be a network issue.
+
+
 
 This example configures:
 
     Generic Kubernetes resources:
     - 1 Service
-    - 1 Deployment
+    - 1 Deployments
     
     Istio resources:
     - 1 Gateway
     - 1 Virtual Service
 
-> **Note:**\
-> I don't intend to explain thing related to Kubernetes unless necessary.
-
 
 # Based on
 
 - [01-hello_world_1_service_1_deployment](../../01-Getting_Started/01-hello_world_1_service_1_deployment)
+- https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPFaultInjection-Delay
 
 # Configuration
 
@@ -87,7 +87,7 @@ spec:
 
 Deploys an Istio gateway that's listening to the port `80` for `HTTP` traffic.
 
-The gateway only will allow the traffic that uses as a URL host: `my.domain`.
+It doesn't filter for any specific host.
 
 The `selector` field is used to "choose" which Istio Load Balancers will have this gateway assigned to.
 
@@ -100,14 +100,14 @@ metadata:
   name: helloworld-gateway
 spec:
   selector:
-    istio: ingressgateway
+    istio: ingressgateway # use istio default controller
   servers:
     - port:
         number: 80
         name: http
         protocol: HTTP
       hosts:
-        - "my.domain"
+        - "*"
 ```
 
 ## VirtualService
@@ -122,7 +122,9 @@ Here we created a rule that will be applied on `HTTP` related traffic (including
 
 This traffic will be forwarded to the port `80` of the destination service `helloworld` (the full path URL equivalent would be `helloworld.$NAMESPACE.svc.cluster.local`).
 
-Additionally, there will be an internal URL rewrite set, as if the URL is not modified, it would attempt to reach to the `/helloworld` path from the Nginx deployment, which currently has no content and would result in an error code `404` (Not found).
+There will be an internal URL rewrite set, as if the URL is not modified, it would attempt to reach to the `/helloworld` path from the Nginx deployment, which currently has no content and would result in an error code `404` (Not found).
+
+Additionally, we apply a "fault", where a 90% of the traffic will have 10 seconds extra of delay.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -145,6 +147,11 @@ spec:
               number: 80
       rewrite:
         uri: "/"
+      fault:
+        delay:
+          percentage:
+            value: 90
+          fixedDelay: 10s
 ```
 
 # Walkthrough
@@ -154,25 +161,25 @@ spec:
 Deploy the resources.
 
 ```shell
-kubectl apply -f ./ 
+kubectl apply -f ./
 ```
-```text
+```text 
 deployment.apps/helloworld-nginx created
 gateway.networking.istio.io/helloworld-gateway created
 service/helloworld created
 virtualservice.networking.istio.io/helloworld-vs created
 ```
 
-## Wait for the deployment to be ready
+## Wait for the pods to be ready
 
-Wait for the Nginx deployment to be up and ready.
+Wait for the Nginx deployments to be up and ready.
 
 ```shell
-kubectl get deployment helloworld-nginx -w 
+kubectl get deployment helloworld-nginx -w
 ```
-```text
+```text 
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-helloworld-nginx   1/1     1            1           44s
+helloworld-nginx   1/1     1            1           12s
 ```
 
 ## Test the service
@@ -191,33 +198,39 @@ NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)     
 istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
 ```
 
-### Curl /helloworld
+### helloworld
 
-When performing a curl towards the destination path, as we are not using the domain host specified in the [gateway resource](#gateway), we are failing to match any rule.
+We will use the `curl` command and feed it a template to provide us with some timings and as well of confirming the status code from the request.
 
-```shell
- curl 192.168.1.50/helloworld -I
-```
-```text
-HTTP/1.1 404 Not Found
-date: Wed, 10 May 2023 08:25:26 GMT
-server: istio-envoy
-transfer-encoding: chunked
-```
-
-### Curl my.domain/helloworld
-
-We can "fake" the destination domain by modifying the `Host` header.
-
-After setting that up, and attempting to curl the destination, we receive a positive response from the Nginx backend. 
+Since the fault that we set had a 90% chance of triggering, if you are "unlucky", and get instantly the response from the backend, you might need to run the command multiple times in order to get the fault triggered.
 
 ```shell
-curl 192.168.1.50/helloworld -s -HHOST:my.domain | grep "<title>.*</title>"
-```
-```text
-<title>Welcome to nginx!</title>
+curl -w @- -o /dev/null -s 192.168.1.50/helloworld <<'EOF'
+          http_code:  %{http_code}\n
+    time_namelookup:  %{time_namelookup}\n
+       time_connect:  %{time_connect}\n
+    time_appconnect:  %{time_appconnect}\n
+   time_pretransfer:  %{time_pretransfer}\n
+      time_redirect:  %{time_redirect}\n
+ time_starttransfer:  %{time_starttransfer}\n
+                    ----------\n
+         time_total:  %{time_total}\n
+EOF
 ```
 
+```text
+          http_code:  200
+    time_namelookup:  0.000010
+       time_connect:  0.000671
+    time_appconnect:  0.000000
+   time_pretransfer:  0.000689
+      time_redirect:  0.000000
+ time_starttransfer:  10.008781
+                    ----------
+         time_total:  10.008817
+```
+
+From the command output, we can observe that the request took more than 10 seconds to be replied, and as well the status code was successful, meaning that the application was able to handle the request.
 
 ## Cleanup
 
@@ -235,4 +248,4 @@ virtualservice.networking.istio.io "helloworld-vs" deleted
 
 # Links of interest
 
-- https://istio.io/latest/docs/reference/config/networking/gateway/
+- https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPFaultInjection-Delay

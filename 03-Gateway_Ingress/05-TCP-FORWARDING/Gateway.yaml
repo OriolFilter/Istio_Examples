@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: helloworld-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: tcp-1
+        protocol: TCP
+      hosts:
+        - "*"
+    - port:
+        number: 443
+        name: tcp-2
+        protocol: TCP
+      hosts:
+        - "*"

@@ -5,7 +5,8 @@ include_toc: true
 
 # Getting Started
 
-The idea of these examples is to get yourself familiarized with the basic elements used on Istio, allowing you to explore the documentation as well of proceeding with other examples or tests on your onw.
+The idea of these examples is to get yourself familiarized with the basic elements used on Istio, allowing you to
+explore the documentation as well of proceeding with other examples or tests on your onw.
 
 On these examples you will find the following Istio resources:
 

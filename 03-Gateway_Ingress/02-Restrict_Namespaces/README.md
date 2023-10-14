@@ -28,7 +28,7 @@ This example configures:
 
 # Based on
 
-- [01-hello_world_1_service_1_deployment](../../01-Getting_Started/01-hello_world_1_service_1_deployment
+- [01-hello_world_1_service_1_deployment](../../01-Getting_Started/01-hello_world_1_service_1_deployment)
 
 # Configuration
 

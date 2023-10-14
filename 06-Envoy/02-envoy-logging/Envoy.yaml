@@ -1,0 +1,37 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: envoy-raise-logs
+  namespace: default
+spec:
+  priority:  40
+  workloadSelector:
+    labels:
+      app: helloworld
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          portNumber: 80
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "envoy.filters.http.router"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.lua
+          typed_config:
+            "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+            inlineCode: |
+              function envoy_on_response(response_handle)
+                response_handle:logCritical("Critical: This is my Critical log")
+                response_handle:logErr("Error: This is my Error log")
+                response_handle:logWarn("Warning: This is my Warning log")
+                response_handle:logInfo("Info: This is my Info log")
+                response_handle:logDebug("Debug: This is my Debug log")
+                response_handle:logTrace("Trace: This is my Trace log")
+                response_handle:logInfo(">>>> Executed `envoy-raise-logs` <<<<")
+              end

@@ -467,7 +467,7 @@ We can see, how the `istio-proxy` container, from the `helloworld` POD, in the n
 [2023-05-15T12:48:31.605Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.108.186.1:8080 172.17.247.52:53742 - -
 ```
 
-`BlackHoleCluster` resembles the same behavior as on the section [Curl helloworld.foo.svc.cluster.local:8080](#curl-helloworldfoosvcclusterlocal--8080).
+`BlackHoleCluster` resembles the same behavior as on the section [Curl helloworld.foo.svc.cluster.local:8080](#curl-helloworldfoosvcclusterlocal8080).
 
 
 
@@ -527,7 +527,7 @@ We can see, how the `istio-proxy` container, from the `helloworld` POD, in the n
 [2023-05-15T12:56:49.064Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.107.249.242:80 172.17.121.93:57680 - -
 ```
 
-`BlackHoleCluster` resembles the same behavior as on the section [Curl helloworld.foo.svc.cluster.local:8080](#curl-helloworldfoosvcclusterlocal--8080).
+`BlackHoleCluster` resembles the same behavior as on the section [Curl helloworld.foo.svc.cluster.local:8080](#curl-helloworldfoosvcclusterlocal8080).
 
 
 
@@ -602,10 +602,7 @@ We can see, how the `istio-proxy` container, from the `helloworld` POD, in the n
 [2023-05-15T13:03:50.935Z] "- - -" 0 UH - - "-" 0 0 0 - "-" "-" "-" "-" "-" BlackHoleCluster - 10.108.186.1:80 172.17.121.93:43342 - -
 ```
 
-`BlackHoleCluster` resembles the same behavior as on the section [Curl helloworld.foo.svc.cluster.local:8080](#curl-helloworldfoosvcclusterlocal--8080).
-
-
-
+`BlackHoleCluster` resembles the same behavior as on the section [Curl helloworld.foo.svc.cluster.local:8080](#curl-helloworldfoosvcclusterlocal8080).
 
 
 #### Curl helloworld.default.svc.cluster.local:8080
@@ -736,3 +733,5 @@ sidecar.networking.istio.io "helloworld-sidecar-foo" deleted
 - https://istio.io/v1.0/help/ops/traffic-management/proxy-cmd/#deep-dive-into-envoy-configuration
 
 - https://istio.io/latest/docs/reference/commands/pilot-discovery/#pilot-discovery-completion
+
+- https://istio.io/latest/docs/tasks/traffic-management/egress/egress-control/#change-to-the-blocking-by-default-policy

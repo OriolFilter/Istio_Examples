@@ -1,24 +1,12 @@
-## Authentication
 
-- Based on namespaces (done)
-  
-- Based on method (somewhat done, so I will mark it as valid)
+## Description
 
-- Based on service account(s) (somewhat done)
+Through the usage of `AuthorizationPolicies`, we are able to configure rules for access control, whether be (but not limited to) **Allowing** or **Denying** the request.
 
-- Custom action (it's in alpha feature, should not focus on it for now)
+On all the examples for simplicity it's been kept to the "Head" request. 
 
-- Audit / logs (should be the 3th)
+## Examples
 
-JWT seems important, refer to source.requestPrincipals
-
-https://istio.io/latest/docs/tasks/security/authentication/
-
-
-
-Per deployment:
-```yaml
-  selector:
-    matchLabels:
-      app: myapi
-```
+- 01-target-namespaces
+- 02-target-service-accounts
+- 03-target-deployments

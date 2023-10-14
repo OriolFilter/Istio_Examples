@@ -3,11 +3,11 @@ gitea: none
 include_toc: true
 ---
 
+
 # Description
 
-This example deploys the same infrastructure as the [previous example](../../01-Getting_Started/01-hello_world_1_service_1_deployment), and restricts the access to the gateway based on the domain host from the destination URL.
+On this example, a new Istio Ingress Load Balancer is deployed through the usage of an `IstioOperator` object, as well deploys a simple service for testing purposes.
 
-The domain host targeted will be `my.domain`.
 
 This example configures:
 
@@ -16,18 +16,27 @@ This example configures:
     - 1 Deployment
     
     Istio resources:
+    - 1 Ingress Gateway Load Balancer
     - 1 Gateway
     - 1 Virtual Service
 
 > **Note:**\
 > I don't intend to explain thing related to Kubernetes unless necessary.
 
-
-# Based on
-
-- [01-hello_world_1_service_1_deployment](../../01-Getting_Started/01-hello_world_1_service_1_deployment)
-
 # Configuration
+
+## Namespace
+
+Creates the namespace `istio-ingress` with the `istio-injection` enabled.
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-ingress
+  labels:
+    istio-injection: "enabled"
+```
 
 ## Service
 
@@ -83,15 +92,40 @@ spec:
             - containerPort: 80
 ```
 
+## IstioOperator
+
+
+Deploys an Istio Ingress Load Balancer named `myistio-ingressgateway`.
+
+It will contain the selector `istio: myingressgateway`.
+
+```yaml
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: ingress
+spec:
+  profile: empty # Do not install CRDs or the control plane
+  components:
+    ingressGateways:
+      - name: myistio-ingressgateway
+        namespace: istio-ingress
+        enabled: true
+        label:
+          # Set a unique label for the gateway. This is required to ensure Gateways
+          # can select this workload
+          istio: myingressgateway
+```
+
 ## Gateway
 
 Deploys an Istio gateway that's listening to the port `80` for `HTTP` traffic.
 
-The gateway only will allow the traffic that uses as a URL host: `my.domain`.
+It doesn't filter for any specific host.
 
 The `selector` field is used to "choose" which Istio Load Balancers will have this gateway assigned to.
 
-The Istio `default` profile creates a Load Balancer in the namespace `istio-system` that has the label `istio: ingressgateway` set, allowing us to target that specific Load Balancer and assign this gateway resource to it.
+On this scenario, we want to target the Istio Ingress Load Balancer we just created, therefore the value of the selector will be `istio: myingressgateway`.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -100,14 +134,14 @@ metadata:
   name: helloworld-gateway
 spec:
   selector:
-    istio: ingressgateway
+    istio: myingressgateway # Uses the selector we just deployed
   servers:
     - port:
         number: 80
         name: http
         protocol: HTTP
       hosts:
-        - "my.domain"
+        - "*"
 ```
 
 ## VirtualService
@@ -157,10 +191,10 @@ Deploy the resources.
 kubectl apply -f ./ 
 ```
 ```text
+namespace/istio-ingress created
 deployment.apps/helloworld-nginx created
 gateway.networking.istio.io/helloworld-gateway created
 service/helloworld created
-virtualservice.networking.istio.io/helloworld-vs created
 ```
 
 ## Wait for the deployment to be ready
@@ -172,7 +206,18 @@ kubectl get deployment helloworld-nginx -w
 ```
 ```text
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-helloworld-nginx   1/1     1            1           44s
+helloworld-nginx   1/1     1            1           16s
+```
+
+## Install the Istio Ingress Gateway Load Balancer
+
+```shell
+istioctl install -f IstioOperator/IstioOperator.yaml -y
+```
+```text
+✔ Ingress gateways installed                                                                                                                                                                                                          
+✔ Installation complete                                                                                                                                                                                                               
+Thank you for installing Istio 1.17.  Please take a few minutes to tell us about your install/upgrade experience!  https://forms.gle/hMHGiwZHPU7UQRWe9
 ```
 
 ## Test the service
@@ -184,55 +229,69 @@ To perform the desired tests, we will need to obtain the IP Istio Load Balancer 
 On my environment, the IP is the `192.168.1.50`.
 
 ```shell
-kubectl get svc -l istio=ingressgateway -A
+kubectl get svc -l istio=myingressgateway -A
 ```
 ```text
-NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
-istio-ingressgateway   LoadBalancer   10.97.47.216   192.168.1.50   15021:31316/TCP,80:32012/TCP,443:32486/TCP   39h
+NAMESPACE       NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                      AGE
+istio-ingress   myistio-ingressgateway   LoadBalancer   10.96.116.25   192.168.1.51   15021:31681/TCP,80:31993/TCP,443:32596/TCP   116s
 ```
 
 ### Curl /helloworld
 
-When performing a curl towards the destination path, as we are not using the domain host specified in the [gateway resource](#gateway), we are failing to match any rule.
+Due to accessing the path `/helloworld`, we are triggering the rule set on the [VirtualService configuration](#virtualservice), sending a request to the Nginx backend and returning us its contents.
 
 ```shell
- curl 192.168.1.50/helloworld -I
-```
-```text
-HTTP/1.1 404 Not Found
-date: Wed, 10 May 2023 08:25:26 GMT
-server: istio-envoy
-transfer-encoding: chunked
-```
-
-### Curl my.domain/helloworld
-
-We can "fake" the destination domain by modifying the `Host` header.
-
-After setting that up, and attempting to curl the destination, we receive a positive response from the Nginx backend. 
-
-```shell
-curl 192.168.1.50/helloworld -s -HHOST:my.domain | grep "<title>.*</title>"
+curl 192.168.1.51/helloworld -s | grep "<title>.*</title>" 
 ```
 ```text
 <title>Welcome to nginx!</title>
 ```
 
+### Curl /other
+
+What happens if we access a path or URL that doesn't trigger any rule?
+
+
+```shell
+curl 192.168.1.51/other -s -I 
+```
+```text
+HTTP/1.1 404 Not Found
+date: Sat, 01 Jul 2023 13:27:14 GMT
+server: istio-envoy
+transfer-encoding: chunked
+```
+
+We receive a status code `404`.
+
+I would like to put emphasis on the following line returned:
+
+```text
+server: istio-envoy
+```
+
+This means that the contents returned was performed by the Istio service, therefore, the request was able to reach Istio and received a response from it.
 
 ## Cleanup
 
 Finally, a cleanup from the resources deployed.
 
+It might take a minute or two, don't **panik** if that's the case.
+
+Take into account that deleting the namespace will also delete the resources in it, **so be careful!**
+
 ```shell
 kubectl delete -f ./
 ```
 ```text
+namespace "istio-ingress" deleted
 deployment.apps "helloworld-nginx" deleted
 gateway.networking.istio.io "helloworld-gateway" deleted
 service "helloworld" deleted
 virtualservice.networking.istio.io "helloworld-vs" deleted
 ```
 
+
 # Links of interest
 
-- https://istio.io/latest/docs/reference/config/networking/gateway/
+- https://istio.io/latest/docs/reference/config/istio.operator.v1alpha1
