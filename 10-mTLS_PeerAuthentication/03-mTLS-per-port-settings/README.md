@@ -5,13 +5,13 @@ include_toc: true
 
 # Based on
 
-- [01-disable-mTLS](../01-disable-mTLS)
+- [02-disable-mTLS](../02-disable-mTLS)
 
 # Description
 
 Based on the previous example that disabled mTLS, and explored how it affected the behavior of the services, on `HTTP` and `HTTPS` backends, this example aims to, through the usage of `portLevelMtls`, configure the `mTLS` behavior based on the destination port.
 
-Through this, we can apply multiple `mTLS` behaviors under a single deployment, unlike the [previous example](../01-disable-mTLS) that required to create 2 different deployments under a single service, and as well implement `Destination Rules` as well of `subsets` to route the traffic between the 2 deployments.  
+Through this, we can apply multiple `mTLS` behaviors under a single deployment, unlike the [previous example](../02-disable-mTLS) that required to create 2 different deployments under a single service, and as well implement `Destination Rules` as well of `subsets` to route the traffic between the 2 deployments.  
 
 > **Note:**\
 > For more information about the image used refer to [here](https://hub.docker.com/r/oriolfilter/https-nginx-demo)
@@ -312,7 +312,7 @@ listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 
 ##### Curl
 
-Even tho, we have set in the [PeerAuthentication configuration](#peerauthentication) mode to `STRICT`, unlike in the [previous example](../01-disable-mTLS/#https-1), where the mode was also set to `STRICT`, in this example we configured the `portLevelMtls` field for the port `443`, successfully disabling `mTLS` for this port, and allowing to proceed with the request towards the `HTTPS` backend; which was performed without the need of disabling `mTLS` for the whole deployment. 
+Even tho, we have set in the [PeerAuthentication configuration](#peerauthentication) mode to `STRICT`, unlike in the [previous example](../02-disable-mTLS/#https-1), where the mode was also set to `STRICT`, in this example we configured the `portLevelMtls` field for the port `443`, successfully disabling `mTLS` for this port, and allowing to proceed with the request towards the `HTTPS` backend; which was performed without the need of disabling `mTLS` for the whole deployment. 
 
 ```shell
 curl 192.168.1.50/https
