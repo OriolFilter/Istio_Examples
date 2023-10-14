@@ -9,9 +9,9 @@ On these examples, a `Sidecar` will be configured.
 
 ## Heads up
 
-On the example `02-egress-proxy`, it's a requisite to configure Istio's `meshConfig.outboundTrafficPolicy.mode` as "REGISTRY_ONLY".
+On the example `02-egress-proxy`, it's a requisite to configure Istio's `meshConfig.outboundTrafficPolicy.mode` as `REGISTRY_ONLY`.
 
-During the installation of the cluster itself, can be set with.
+During the installation of the cluster itself, can be set with:
 
 ```shell
 istioctl install profile=default --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY

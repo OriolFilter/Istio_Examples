@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: envoy-add-response-header2
+  name: envoy-add-response-header
   namespace: default
 spec:
-  priority:  40
+  priority:  30
   workloadSelector:
     labels:
       app: helloworld
@@ -27,12 +27,5 @@ spec:
             "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
             inlineCode: |
               function envoy_on_response(response_handle)
-                response_handle:headers():add("fruit", "watermelons")
-                response_handle:logCritical("Critical: Added header `fruit`")
-                response_handle:logErr("Error: Added header `fruit`")
-                response_handle:logWarn("Warning: Added header `fruit`")
-                response_handle:logInfo("Info: Added header `fruit`")
-                response_handle:logDebug("Debug: Added header `fruit`")
-                response_handle:logTrace("Trace: Added header `fruit`")
-                response_handle:logInfo(">>>> Executed `envoy-add-response-header2` <<<<")
+                response_handle:headers():add("numbers", "lots of numbers")
               end

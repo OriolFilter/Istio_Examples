@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: envoy-add-response-header
+  name: envoy-raise-logs
   namespace: default
 spec:
-  priority:  30
+  priority:  40
   workloadSelector:
     labels:
       app: helloworld
@@ -27,7 +27,11 @@ spec:
             "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
             inlineCode: |
               function envoy_on_response(response_handle)
-                response_handle:headers():add("numbers", "lots of numbers")
-                response_handle:logInfo("Added header `numbers`")
-                response_handle:logInfo(">>>> Executed `envoy-add-response-header` <<<<")
+                response_handle:logCritical("Critical: This is my Critical log")
+                response_handle:logErr("Error: This is my Error log")
+                response_handle:logWarn("Warning: This is my Warning log")
+                response_handle:logInfo("Info: This is my Info log")
+                response_handle:logDebug("Debug: This is my Debug log")
+                response_handle:logTrace("Trace: This is my Trace log")
+                response_handle:logInfo(">>>> Executed `envoy-raise-logs` <<<<")
               end
