@@ -1,0 +1,21 @@
+prometheus:
+  prometheusSpec:
+    retention: "30d"
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: slow-nfs-01
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 50Gi
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: slow-nfs-01
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 10Gi

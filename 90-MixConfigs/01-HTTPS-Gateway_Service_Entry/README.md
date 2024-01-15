@@ -108,7 +108,7 @@ spec:
 
 ## DestinationRule
 
-As seen in the example [02-Traffic_management/09-HTTPS-backend](../../04-Backends/02-HTTPS-backend), where we configure Istio to use an `HTTPS` backend, the same configuration is applied on this case (yes, I am aware that a `ServiceEntry` is also a backend).
+As seen in the example [04-Backends/03-HTTPS-backend)](../../04-Backends/03-HTTPS-backend), where we configure Istio to use an `HTTPS` backend, the same configuration is applied on this case (yes, I am aware that a `ServiceEntry` is also a backend).
 
 For such, we deploy a `DestinationRule` setting to expect to terminate the TLS traffic, for the traffic with resource destination `github.com`, and port `8443`, which matches the settings set in our [ServiceEntry](#serviceentry) deployed.
 
