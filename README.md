@@ -8,6 +8,10 @@ Refer to the specific `README.md` in each example for more information.
 
 # Tree of folders
 
+```shell
+tree -d | grep -v src$
+```
+
 ```text
 ├── 00-Troubleshooting
 ├── 01-Getting_Started
@@ -54,6 +58,10 @@ Refer to the specific `README.md` in each example for more information.
 │   ├── 01-FaultInjection-delay
 │   └── 02-FaultInjection-abort
 ├── 12-CircuitBreaking
+├── 13-monitoring
+│   ├── 01-Create_Prometheus_Stack
+│   ├── 02-Add_Istio_Scrapping_Metrics
+│   └── 03-Grafana_Istio_Dashboards
 ├── 90-MixConfigs
 │   ├── 01-HTTPS-Gateway_Service_Entry
 │   └── Minecraft

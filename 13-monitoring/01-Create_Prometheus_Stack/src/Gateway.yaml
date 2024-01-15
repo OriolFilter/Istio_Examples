@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: local-gateway
+  namespace: default
+spec:
+  selector:
+    istio: local-ingress
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "my.home"
+        - "*.filter.home"
