@@ -146,7 +146,7 @@ namespace/metallb created
 ```
 
 ```shell
-helm install metallb metallb/metallb --namespace metallb
+helm install metallb metallb/metallb --namespace metallb --wait
 ```
 
 ```text
