@@ -78,6 +78,14 @@ Eventually the spot will be filled back.
 
 Want to avoid renaming folders unless required as it could break link references within the documentation.
 
+# Setting up a cluster to use this exercises as reference.
+
+Refer to the directory [Setup](./Setup).
+
+Contains instructions for setting up a Kind cluster, and also a script of personal use I used a while ago for a bland Kubernetes/kubeadm cluster.
+
+Kind is much more recent, so a couple of things might differ when using that stack, but bases and concepts remain the same. 
+
 # Glossary
 
 https://istio.io/latest/docs/reference/glossary/
