@@ -200,17 +200,17 @@ l2advertisement.metallb.io/main-pool created
 kubectl create ns istio-system
 ```
 
+### Istio Base
+
 ```shell
 helm install istio-base istio/base -n istio-system --wait
 ```
 
-### Istio Base
+### IstioD
 
 ```shell
 helm install istiod istio/istiod -n istio-system  --wait
 ```
-
-### IstioD
 
 ### Istio Ingress
 
