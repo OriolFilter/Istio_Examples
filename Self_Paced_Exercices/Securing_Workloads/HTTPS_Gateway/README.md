@@ -2,6 +2,8 @@
 
 Create a Gateway that uses HTTP and has a certificate attached to it.
 
+The port 80 should be redirected to the port 443 from the Gateway.
+
 Set up the minimum TLS to be TLS version 1.1.
 
 > **Warning**:\
