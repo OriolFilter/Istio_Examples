@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: external-svc-http
+spec:
+  hosts:
+  - ifconfig.me
+  location: MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: http
+  resolution: DNS

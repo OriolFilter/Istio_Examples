@@ -21,7 +21,7 @@ Installation, Upgrades, and Configuration – 20%
 Traffic Management – 35%
 
 - [x] (only ingress) Configuring Ingress and Egress Traffic
-- [x] (lacks Service entry) Configuring Routing within a Service Mesh
+- [x] Configuring Routing within a Service Mesh
 - [x] Defining Traffic Policies with Destination Rules
 - [x] Configuring Traffic Shifting
 - [ ] Connecting In-Mesh Workloads to External Workloads and Services
@@ -36,7 +36,7 @@ Securing Workloads – 25%
 
 Troubleshooting – 20%
 
-- [ ] Troubleshooting Configuration
+- [ ] Troubleshooting Configuration (todo enable envoy logs by using telemetry api object)
 - [ ] Troubleshooting the Mesh Control Plane
 - [ ] Troubleshooting the Mesh Data Plane
 

@@ -10,4 +10,3 @@ spec:
         tls:
           mode: SIMPLE
           insecureSkipVerify: true
-    - name: default 

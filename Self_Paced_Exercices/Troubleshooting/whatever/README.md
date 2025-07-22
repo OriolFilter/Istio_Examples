@@ -107,3 +107,24 @@ kubectl get gateways.networking.istio.io -A
 NAMESPACE   NAME            AGE
 default     generic-https   7m38s
 ```
+
+# routines:OPENSSL_internal:CERTIFICATE_VERIFY_FAILED:TLS_error_end
+
+The certificate couldn't be validated (thus `CERTIFICATE_VERIFY_FAILED`).
+
+Using a DestinationRoute object you can set the certificate to not be validated.
+
+```yaml
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: https-helloworld
+spec:
+  host: helloworld.default.svc.cluster.local
+  subsets:
+    - name: https
+      trafficPolicy:
+        tls:
+          mode: SIMPLE
+          insecureSkipVerify: false
+```
