@@ -21,9 +21,9 @@ Installation, Upgrades, and Configuration – 20%
 Traffic Management – 35%
 
 - [x] (only ingress) Configuring Ingress and Egress Traffic
-- [ ] Configuring Routing within a Service Mesh
-- [ ] Defining Traffic Policies with Destination Rules
-- [x] (no traffic mirroring) Configuring Traffic Shifting
+- [x] (lacks Service entry) Configuring Routing within a Service Mesh
+- [x] Defining Traffic Policies with Destination Rules
+- [x] Configuring Traffic Shifting
 - [ ] Connecting In-Mesh Workloads to External Workloads and Services
 - [ ] Using Resilience Features (circuit breaking, failover, outlier detection, timeouts, retries)
 - [ ] Using Fault Injection
@@ -32,7 +32,7 @@ Securing Workloads – 25%
 
 - [x] Configuring Authorization
 - [ ] Configuring Authentication (mTLS, JWT)
-- [x] (tls passthrough) Securing Edge Traffic with TLS
+- [x] Securing Edge Traffic with TLS
 
 Troubleshooting – 20%
 

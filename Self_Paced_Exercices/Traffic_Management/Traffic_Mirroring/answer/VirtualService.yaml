@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: helloworld-vs
+  namespace: default
+spec:
+  hosts:
+  - '*'
+  gateways:
+  - 'istio-ingress/generic'
+  http:
+  - name: "v1"
+    match:
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        subset: v1
+    mirror:
+      host: helloworld.default.svc.cluster.local
+      subset: v2
+    mirrorPercentage:
+      value: 100.0

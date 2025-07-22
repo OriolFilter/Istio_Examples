@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: generic
+  namespace: istio-ingress
+spec:
+  selector:
+    app: istio-ingress
+    app.kubernetes.io/instance: istio-ingress
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
