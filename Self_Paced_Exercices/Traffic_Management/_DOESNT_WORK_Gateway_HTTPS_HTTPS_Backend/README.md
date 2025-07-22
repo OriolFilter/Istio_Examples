@@ -25,3 +25,10 @@ kubectl create -n istio-ingress secret tls my-tls-cert-secret \
   --cert=certfolder/istio.cert.crt
 ```
 
+
+
+## Test
+
+```shell
+curl 
+```

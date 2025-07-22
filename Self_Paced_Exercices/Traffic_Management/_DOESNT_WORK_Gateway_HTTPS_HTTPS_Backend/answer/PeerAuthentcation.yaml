@@ -4,22 +4,11 @@ metadata:
   name: default
   namespace: default
 spec:
-  #mtls:
-  #  mode: DISABLE
   selector:
     matchLabels:
       app: helloworld
   mtls:
-    mode: DISABLE
+    mode: STRICT
   portLevelMtls:
     443:
       mode: DISABLE
----
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: default
-spec:
-  mtls:
-    mode: DISABLE
