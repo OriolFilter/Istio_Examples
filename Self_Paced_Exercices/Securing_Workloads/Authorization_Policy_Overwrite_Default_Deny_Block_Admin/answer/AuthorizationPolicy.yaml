@@ -1,0 +1,15 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-traffic
+  namespace: default
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["istio-ingress"]
+    to:
+    - operation:
+        methods: ["GET", "HEAD"]
+        notPaths: ["/admin*"]

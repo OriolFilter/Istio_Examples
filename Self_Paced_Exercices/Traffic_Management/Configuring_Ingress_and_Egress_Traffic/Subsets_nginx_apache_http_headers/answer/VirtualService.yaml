@@ -1,0 +1,44 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: helloworld-vs
+  namespace: default
+spec:
+  hosts:
+  - '*'
+  gateways:
+  - 'istio-ingress/generic'
+  http:
+  - name: default
+    match:
+     - withoutHeaders:
+         backend: {}
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+
+  - name: nginx
+    match:
+     - headers:
+         backend:
+           exact: nginx
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        subset: nginx
+
+  - name: apache
+    match:
+     - headers:
+         backend:
+           exact: apache
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        subset: apache
+
+  - name: bad
+    directResponse:
+      status: 403
+      body:
+        string: "<h1>Calvo</h1>"

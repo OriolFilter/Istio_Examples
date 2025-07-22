@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: simple-vs
+  namespace: default
+spec:
+  gateways:
+    - istio-ingress/default
+  hosts:
+    - '*'
+  http:
+    - route:
+        - destination:
+            host: nginx-svc

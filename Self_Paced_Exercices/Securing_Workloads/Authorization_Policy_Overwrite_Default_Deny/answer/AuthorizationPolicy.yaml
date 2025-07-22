@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-lb
+  namespace: default
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["istio-ingress"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/"]
+        ports: ["80"]

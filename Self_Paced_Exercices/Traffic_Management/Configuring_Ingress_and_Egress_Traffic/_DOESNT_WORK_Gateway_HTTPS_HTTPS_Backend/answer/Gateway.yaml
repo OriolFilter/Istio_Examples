@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: generic
+  namespace: istio-ingress
+spec:
+  selector:
+    app: istio-ingress
+    istio: ingress
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    #tls:
+    #  httpsRedirect: true
+    hosts:
+    - "*"
+    #- "lb.net"
+  - port:
+       number: 443
+       name: https
+       protocol: HTTPS
+    hosts:
+    - "lb.net"
+    tls:
+      mode: SIMPLE
+      credentialName: my-tls-cert-secret

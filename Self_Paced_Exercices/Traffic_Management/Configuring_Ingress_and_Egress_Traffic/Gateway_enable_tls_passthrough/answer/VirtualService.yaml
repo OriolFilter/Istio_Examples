@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: lb-net-svc
+  namespace: default
+spec:
+  hosts:
+  - 'lb.net'
+  gateways:
+  - 'istio-ingress/lbnetgateway'
+  tls:
+  - match:
+#    -  port: 443
+    -  sniHosts:
+         - 'lb.net'
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+#        port: 8443

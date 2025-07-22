@@ -1,4 +1,46 @@
-# Setting Istio/a Cluster for that through Kind
+
+# Description
+
+Expecting this to be done in the Istio v1.26.
+
+Will try to limit myself within the realms of the official documentation, or whatever I can do from the command shell.
+
+## Links
+
+### https://training.linuxfoundation.org/istio-certified-associate-ica-program-changes/
+
+#### topics
+
+Installation, Upgrades, and Configuration – 20%
+
+    Installing Istio with istioctl or Helm
+    Installing Istio in Sidecar or Ambient Mode
+    Customizing your Istio Installation
+    Upgrading Istio (Canary, In-Place)
+
+Traffic Management – 35%
+
+    Configuring Ingress and Egress Traffic
+    Configuring Routing within a Service Mesh
+    Defining Traffic Policies with Destination Rules
+    Configuring Traffic Shifting
+    Connecting In-Mesh Workloads to External Workloads and Services
+    Using Resilience Features (circuit breaking, failover, outlier detection, timeouts, retries)
+    Using Fault Injection
+
+Securing Workloads – 25%
+
+    Configuring Authorization
+    Configuring Authentication (mTLS, JWT)
+    Securing Edge Traffic with TLS
+
+Troubleshooting – 20%
+
+    Troubleshooting Configuration
+    Troubleshooting the Mesh Control Plane
+    Troubleshooting the Mesh Data Plane
+
+# Init
 
 ## Create cluster
 
@@ -146,7 +188,7 @@ namespace/metallb created
 ```
 
 ```shell
-helm install metallb metallb/metallb --namespace metallb --wait
+helm install metallb metallb/metallb --namespace metallb
 ```
 
 ```text
@@ -194,44 +236,19 @@ ipaddresspool.metallb.io/main-pool created
 l2advertisement.metallb.io/main-pool created
 ```
 
-## Add Helm chart
-```shell
-helm repo add istio https://istio-release.storage.googleapis.com/charts
-helm repo update
-```
+# Killer coda Exercises (1.18)
 
-```text
-"istio" has been added to your repositories
-Hang tight while we grab the latest from your chart repositories...
-...Successfully got an update from the "metrics-server" chart repository
-...Successfully got an update from the "istio" chart repository
-Update Complete. ⎈Happy Helming!⎈
-```
+https://killercoda.com/ica
 
-## Installing Istio components
+Examples might be EXTREMELY OUTDATED (we're talking about the version 1.18 while the exam will be in the 1.26)
 
-```shell
-kubectl create ns istio-system
-```
+# Killer coda (1.24)
 
-### Istio Base
+https://github.com/killercoda/scenarios-istio?tab=readme-ov-file
 
-```shell
-helm install istio-base istio/base -n istio-system --wait
-```
+# Other things to take a look (eventually idk i havent yet no clue if its good nor relevant)
 
-### IstioD
+https://medium.com/@wattsdave/istio-certified-associate-ica-exam-prep-51b59bdd372f
 
-```shell
-helm install istiod istio/istiod -n istio-system  --wait --set meshConfig.accessLogFile="/dev/stdout"
-```
+https://www.cncf.io/training/certification/ica/
 
-### Istio Ingress
-
-```shell
-kubectl create ns istio-ingress
-```
-
-```shell
-helm install istio-ingress istio/gateway -n istio-ingress --wait
-```
