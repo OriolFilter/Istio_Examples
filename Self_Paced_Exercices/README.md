@@ -24,7 +24,7 @@ Traffic Management – 35%
 - [x] Configuring Routing within a Service Mesh
 - [x] Defining Traffic Policies with Destination Rules
 - [x] Configuring Traffic Shifting
-- [ ] Connecting In-Mesh Workloads to External Workloads and Services
+- [x] Connecting In-Mesh Workloads to External Workloads and Services
 - [ ] Using Resilience Features (circuit breaking, failover, outlier detection, timeouts, retries)
 - [ ] Using Fault Injection
 
