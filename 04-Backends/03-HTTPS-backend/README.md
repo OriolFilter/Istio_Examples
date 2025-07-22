@@ -102,6 +102,8 @@ By setting the `tls.mode` field with `simple`, it means that there will be an at
 > **Note:** 
 > For more information about the TLS mode, refer to the [Istio official documentation from the DestinationRule object regarding the TLS mode field](https://istio.io/latest/docs/reference/config/networking/destination-rule/#ClientTLSSettings-TLSmode). 
 
+Since the certificate is self-signed, we need to skip the certificate validation with `insecureSkipVerify: true`
+
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -116,6 +118,7 @@ spec:
             number: 8443
           tls:
             mode: SIMPLE
+            insecureSkipVerify: true
 ```
 
 ## Service
