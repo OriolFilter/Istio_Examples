@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
-  name: generic
+  name: generic-https
   namespace: istio-ingress
 spec:
   selector:
@@ -12,17 +12,17 @@ spec:
       number: 80
       name: http
       protocol: HTTP
+    hosts:
+    - "lb.net"
     tls:
       httpsRedirect: true
-    hosts:
-#    - "*"
-    - "lb.net"
   - port:
-       number: 443
-       name: https
-       protocol: HTTPS
+      number: 443
+      name: https
+      protocol: https
     hosts:
     - "lb.net"
     tls:
       mode: SIMPLE
       credentialName: my-tls-cert-secret
+      minProtocolVersion: TLSV1_2
