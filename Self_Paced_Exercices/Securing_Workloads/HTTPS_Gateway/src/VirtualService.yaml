@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: https-helloworld
+spec:
+  gateways:
+  - "istio-ingress/generic-https"
+  hosts:
+  - "lb.net"
+  http:
+  - name: "https"
+    match:
+    - port: 443
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        port:
+          number:  80

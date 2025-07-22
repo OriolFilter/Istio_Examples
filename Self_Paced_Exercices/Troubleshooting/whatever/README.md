@@ -80,3 +80,30 @@ spec:
         host: nginx-svc
         host: apache-svc
 ```
+
+
+# NR route_not_found
+
+## Situation 1, gateway returns 404, no backend found
+
+```shell
+istioctl analyze
+```
+
+```shell
+Error [IST0101] (VirtualService default/https-helloworld) Referenced gateway not found: "istio-ingress/generic-https"
+Warning [IST0132] (VirtualService default/https-helloworld) one or more host [lb.net] defined in VirtualService default/https-helloworld not found in Gateway istio-ingress/generic-https.
+Error: Analyzers found issues when analyzing namespace: default.
+See https://istio.io/v1.26/docs/reference/config/analysis for more information about causes and resolutions.
+```
+
+Gateway was created in the namespace "default instead".
+
+```shell
+kubectl get gateways.networking.istio.io -A
+```
+
+```text
+NAMESPACE   NAME            AGE
+default     generic-https   7m38s
+```

@@ -1,4 +1,10 @@
 
+whatever is this
+
+https://istio.io/latest/docs/ops/diagnostic-tools/istioctl-analyze/#enabling-validation-messages-for-resource-status
+
+---
+
 https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRedirect
 
 ## The idea is that this rewrite is handled "externally" by the client, not by Istio.

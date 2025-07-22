@@ -13,32 +13,32 @@ Will try to limit myself within the realms of the official documentation, or wha
 
 Installation, Upgrades, and Configuration – 20%
 
-    Installing Istio with istioctl or Helm
-    Installing Istio in Sidecar or Ambient Mode
-    Customizing your Istio Installation
-    Upgrading Istio (Canary, In-Place)
+- [x] (only helm) Installing Istio with istioctl or Helm
+- [ ] Installing Istio in Sidecar or Ambient Mode
+- [ ] Customizing your Istio Installation
+- [ ] Upgrading Istio (Canary, In-Place)
 
 Traffic Management – 35%
 
-    Configuring Ingress and Egress Traffic
-    Configuring Routing within a Service Mesh
-    Defining Traffic Policies with Destination Rules
-    Configuring Traffic Shifting
-    Connecting In-Mesh Workloads to External Workloads and Services
-    Using Resilience Features (circuit breaking, failover, outlier detection, timeouts, retries)
-    Using Fault Injection
+- [x] (only ingress) Configuring Ingress and Egress Traffic
+- [ ] Configuring Routing within a Service Mesh
+- [ ] Defining Traffic Policies with Destination Rules
+- [x] (no traffic mirroring) Configuring Traffic Shifting
+- [ ] Connecting In-Mesh Workloads to External Workloads and Services
+- [ ] Using Resilience Features (circuit breaking, failover, outlier detection, timeouts, retries)
+- [ ] Using Fault Injection
 
 Securing Workloads – 25%
 
-    Configuring Authorization
-    Configuring Authentication (mTLS, JWT)
-    Securing Edge Traffic with TLS
+- [x] Configuring Authorization
+- [ ] Configuring Authentication (mTLS, JWT)
+- [x] (tls passthrough) Securing Edge Traffic with TLS
 
 Troubleshooting – 20%
 
-    Troubleshooting Configuration
-    Troubleshooting the Mesh Control Plane
-    Troubleshooting the Mesh Data Plane
+- [ ] Troubleshooting Configuration
+- [ ] Troubleshooting the Mesh Control Plane
+- [ ] Troubleshooting the Mesh Data Plane
 
 # Init
 
@@ -252,3 +252,18 @@ https://medium.com/@wattsdave/istio-certified-associate-ica-exam-prep-51b59bdd37
 
 https://www.cncf.io/training/certification/ica/
 
+
+
+## Istioctl Analyze
+
+Useful since **might hint** misconfigurations.
+
+```shell
+istioctl analyze --all-namespaces
+```
+
+```text
+Info [IST0102] (Namespace local-path-storage) The namespace is not enabled for Istio injection. Run 'kubectl label namespace local-path-storage istio-injection=enabled' to enable it, or 'kubectl label namespace local-path-storage istio-injection=disabled' to explicitly mark it as not needing injection.
+Info [IST0102] (Namespace metallb) The namespace is not enabled for Istio injection. Run 'kubectl label namespace metallb istio-injection=enabled' to enable it, or 'kubectl label namespace metallb istio-injection=disabled' to explicitly mark it as not needing injection.
+Info [IST0118] (Service default/nginx-svc) Port name  (port: 80, targetPort: 80) doesn't follow the naming convention of Istio port.
+```
