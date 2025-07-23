@@ -15,12 +15,12 @@ Installation, Upgrades, and Configuration – 20%
 
 - [x] (only helm) Installing Istio with istioctl or Helm
 - [ ] Installing Istio in Sidecar or Ambient Mode
-- [ ] Customizing your Istio Installation
+- [x] (only helm) Customizing your Istio Installation
 - [ ] Upgrading Istio (Canary, In-Place)
 
 Traffic Management – 35%
 
-- [x] (only ingress) Configuring Ingress and Egress Traffic
+- [x] Configuring Ingress and Egress Traffic
 - [x] Configuring Routing within a Service Mesh
 - [x] Defining Traffic Policies with Destination Rules
 - [x] Configuring Traffic Shifting
