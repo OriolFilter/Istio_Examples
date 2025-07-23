@@ -1,0 +1,13 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: helloworld-v1-accesslogs
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: helloworld
+      backend: apache
+  accessLogging:
+    - providers:
+      - name: envoy
