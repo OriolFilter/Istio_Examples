@@ -11,6 +11,16 @@ This implies installing:
 
 ![default_profile_components.png](src/default_profile_components.png)
 
+## Create NS
+
+```shell
+kubectl create ns istio-system
+```
+
+```text
+namespace/istio-system created
+```
+
 ## Istio Base
 
 > This chart installs resources shared by all Istio revisions. This includes Istio CRDs.

@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: dual-backend
+spec:
+  gateways:
+  - istio-ingress/generic
+  hosts:
+  - '*'
+  http:
+  - name: "nginx"
+    match:
+    - uri:
+        prefix: "/nginx"
+    rewrite:
+      uri: "/"
+    route:   
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        subset: nginx
+  - name: "apache"
+    match:
+    - uri:
+        prefix: "/apache"
+    rewrite:
+      uri: "/"
+    route:   
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        subset: apache
+  - name: "default"
+    match:
+    - uri:
+        prefix: "/"
+    rewrite:
+      uri: "/"
+    route:   
+    - destination:
+        host: helloworld.default.svc.cluster.local
+        #host: helloworld-dr
+        subset: default

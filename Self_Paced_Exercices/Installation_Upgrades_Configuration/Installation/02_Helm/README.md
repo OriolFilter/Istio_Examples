@@ -19,13 +19,3 @@ Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "istio" chart repository
 Update Complete. ⎈Happy Helming!⎈
 ```
-
-## Create NS
-
-```shell
-kubectl create ns istio-system
-```
-
-```text
-namespace/istio-system created
-```

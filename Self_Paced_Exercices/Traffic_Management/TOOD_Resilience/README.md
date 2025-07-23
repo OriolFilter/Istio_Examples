@@ -1,0 +1,1 @@
+https://istio.io/latest/docs/concepts/traffic-management/#network-resilience-and-testing

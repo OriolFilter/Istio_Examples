@@ -26,7 +26,7 @@ Traffic Management – 35%
 - [x] Configuring Traffic Shifting
 - [x] Connecting In-Mesh Workloads to External Workloads and Services
 - [ ] Using Resilience Features (circuit breaking, failover, outlier detection, timeouts, retries)
-- [ ] Using Fault Injection
+- [x] Using Fault Injection
 
 Securing Workloads – 25%
 
