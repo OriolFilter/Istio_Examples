@@ -1,0 +1,1 @@
+https://killercoda.com/lorenzo-g/scenario/security-authorization-jwt-token

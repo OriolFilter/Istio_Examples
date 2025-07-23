@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: cern
+spec:
+  gateways:
+  - istio-ingress/ingress-gateway
+  hosts:
+  - '*'
+  http:
+  - name: "ifconfig.me"
+    headers:
+      request:
+        set:
+          HOST: "ifconfig.me"
+    route:
+    - destination:
+        host: ifconfig.me
+        port:
+          number: 443
+

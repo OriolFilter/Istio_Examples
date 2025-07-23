@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: egress-gateway
+  namespace: istio-egress
+spec:
+  selector:
+    app: istio-egress
+    app.kubernetes.io/instance: istio-egress
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: https
+      hosts:
+        - "ifconfig.me"
+      tls:
+        mode: PASSTHROUGH
