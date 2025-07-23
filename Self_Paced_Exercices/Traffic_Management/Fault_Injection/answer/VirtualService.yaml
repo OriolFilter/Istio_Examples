@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: helloworld-vs
+  namespace: default
+spec:
+  hosts:
+  - '*'
+  gateways:
+  - istio-ingress/generic
+  http:
+  - name: "backend"
+    route:
+    - destination:
+        host: helloworld.default.svc.cluster.local
+    fault:
+      delay:
+        fixedDelay: 4s
+        percentage:
+          value: 50.0
+      abort:
+        percentage:
+          value: 30.0
+        httpStatus: 502
+
